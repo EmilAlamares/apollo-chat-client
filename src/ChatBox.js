@@ -1,11 +1,8 @@
-import { useState } from "react"
-
 const ChatBox = () => {
-  const [height, setHeight] = useState({ height: "35px" })
 
   const autoResize = (e) => {
-  setHeight({height: "35px"})
-    setHeight({height: `${e.target.scrollHeight}px`})
+    e.target.style.cssText = "height: 35px"
+    e.target.style.cssText = `height: ${e.target.scrollHeight}px`
   }
 
   return (
@@ -16,11 +13,12 @@ const ChatBox = () => {
 
         <div className="chat-box-input-container flex-1">
           <textarea
-            style={height}
+            style={{height: "35px"}}
             className="chat-box-input"
             type="text"
             placeholder="Aa"
             onChange={(e) => {
+        
               autoResize(e)
             }}
           />
