@@ -1,13 +1,227 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Roboto";
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input::-webkit-input-placeholder{
+  color: #C49E85;
+}
+
+input, textarea {
+  caret-color: #41362F;
+  color: #41362F;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+}
+
+/* Navbar */
+
+.navbar {
+  background-color: #41362f;
+  padding: 13px 0px;
+  height: 50px;
+  align-items: center;
+}
+
+.navbar img {
+  margin-left: 25px;
+}
+
+.navbar h1 {
+  color: #c49e85;
+  font-size: 17px;
+  text-transform: uppercase;
+  margin-left: 15px;
+}
+
+/* Main Content */
+.main-content {
+  height: 100%;
+  background-color: #f2d6bc;
+}
+
+/* Left Sidebar */
+.left-sidebar-container {
+  width: 100%;
+  height: 100%;
+  border-right: #41362f 2px solid;
+  flex: 1;
+}
+
+.searchBar-container,
+.chat-window-header,
+.right-sidebar-header {
+  height: 85px;
+  border-bottom: #41362f 2px solid;
+  text-align: center;
+}
+
+.searchBar-container input {
+  width: 200px;
+  height: 40px;
+  color: #41362f;
+  border-radius: 10px;
+  border: 1px #41362f solid;
+  padding: 15px 20px;
+  font-size: 15px;
+  background-color: #fcf0e8;
+  margin: 23px;
+}
+
+.left-sidebar-content {
+  height: 100%;
+}
+
+.searchBar-container input:focus {
+  outline: none;
+}
+
+/* Chat UI */
+.chat-container {
+  flex: 2;
+  text-align: center;
+}
+
+.chat-content {
+  background: #fcf0e8;
+  flex: 9;
+}
+
+.chat-box {
+  flex: 1;
+  border-top: 2px solid #41362f;
+}
+
+.chat-box form {
+  align-items: center;
+  flex: 1;
+  padding: 10px 0px;
+}
+
+.chat-box textarea {
+  max-height: 125px;
+  width: 100%;
+  border: none;
+  border-radius: 15px;
+  padding: 8px 12px;
+  font-size: 15px;
+  resize: none;
+  overflow-y: auto;
+  outline: none;
+}
+
+.chat-box-input-container{
+  max-height: 125px;
+  border-radius: 15px;
+  margin: 0px 20px 0px 50px;
+  overflow: hidden;
+}
+
+.chat-box button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin-right: 20px;
+  width: 30px;
+  height: 30px;
+  background-image: url("../public/sendButton.png");
+}
+
+/* Right Sidebar */
+.right-sidebar-container {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  border-left: #41362f 2px solid;
+}
+
+.right-sidebar-header {
+  border-bottom: none;
+}
+
+/* Login */
+
+.login-container {
+  margin: 0px auto;
+  text-align: center;
+  border: #6b4b3e solid;
+  max-width: 600px;
+  max-height: 600px;
+  overflow: hidden;
+}
+
+.login-container h1 {
+  background-color: #c49e85;
+  color: #f8f4f9;
+  border-bottom: #6b4b3e solid 2px;
+  height: 66px;
+  padding: 12px 0px;
+}
+
+.login-container h2, .create-container h2 {
+  color: #41362f;
+  font-size: 32px;
+  text-transform: uppercase;
+  margin-top: 50px;
+  letter-spacing: 5px;
+  font-family: "Roboto";
+}
+
+.login-container input {
+  display: block;
+  border: #41362f 2px solid;
+  width: 350px;
+  height: 70px;
+  background-color: #fbe9dd;
+  border-radius: 10px;
+  padding: 30px 20px;
+  font-size: 25px;
+}
+
+.login-container form {
+  margin: 0px 125px;
+  padding: 55px 0px 176px;
+}
+
+.login-container .flex {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-container button {
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  color: #41362f;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Create Account */ 
+.create-container button {
+  float: right;
+}
+
+/* Utils */
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-v {
+  display: flex;
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+  height: 100vh;
 }
