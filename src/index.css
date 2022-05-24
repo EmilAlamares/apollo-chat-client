@@ -2,7 +2,7 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: "Roboto";
+  font-family: 'Roboto', sans-serif;
 }
 
 input::-webkit-input-placeholder{
@@ -37,6 +37,7 @@ input, textarea {
   font-size: 17px;
   text-transform: uppercase;
   margin-left: 15px;
+  letter-spacing: 6px;
 }
 
 /* Main Content */
@@ -49,7 +50,7 @@ input, textarea {
 .left-sidebar-container {
   width: 100%;
   height: 100%;
-  border-right: #41362f 2px solid;
+  border-right: #41362f 1px solid;
   flex: 1;
 }
 
@@ -57,12 +58,16 @@ input, textarea {
 .chat-window-header,
 .right-sidebar-header {
   height: 85px;
-  border-bottom: #41362f 2px solid;
+  border-bottom: #41362f 1px solid;
   text-align: center;
 }
 
+.searchBar-container{
+  border:none;
+}
+
 .searchBar-container input {
-  width: 200px;
+  width: 300px;
   height: 40px;
   color: #41362f;
   border-radius: 10px;
@@ -89,36 +94,35 @@ input, textarea {
 
 .chat-content {
   background: #fcf0e8;
-  flex: 9;
+  flex: 1;
 }
 
 .chat-box {
-  flex: 1;
-  border-top: 2px solid #41362f;
+  border-top: 1px solid #41362f;
 }
 
 .chat-box form {
   align-items: center;
   flex: 1;
-  margin: 20px 40px 20px 40px;
+  margin: 10px 40px 10px 40px;
 }
 
 .chat-box textarea {
   max-height: 125px;
   width: 100%;
-  border: none;
-  border-radius: 15px;
-  padding: 8px 12px;
+  border: 8px solid #fcf0e8;
+  height: 36px;
   font-size: 15px;
   resize: none;
-  overflow-y: auto;
   outline: none;
+  background-color: transparent;
+  padding: 0px 4px;
 }
 
 .chat-box-input-container{
-  max-height: 125px;
   border-radius: 15px;
   overflow: hidden;
+  background-color:#fcf0e8;
 }
 
 .chat-box button {
@@ -136,7 +140,7 @@ input, textarea {
   width: 100%;
   height: 100%;
   flex: 1;
-  border-left: #41362f 2px solid;
+  border-left: #41362f 1px solid;
 }
 
 .right-sidebar-header {
