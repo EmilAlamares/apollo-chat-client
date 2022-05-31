@@ -7,16 +7,23 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault()
-  
-    fetch(`http://localhost:8000/members?username=${username}`)
-      .then((data) => {
-        if (data) return data.json()
+    const data = new URLSearchParams({
+      username: `${username}`,
+      password: `${password}`,
+    }).toString()
 
+    fetch(`http://localhost:8000/users/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: data,
+    })
+      .then((data) => {
+        return data.json()
       })
       .then((res) => {
-        if (!res.length) throw new Error('User not found.')
-        if (res[0].password === password) console.log('Logged In')
-        else console.log('Incorrect credentials')
+        console.log(res)
       })
   }
 
