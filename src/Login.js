@@ -1,7 +1,8 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 const Login = () => {
+  const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
@@ -15,16 +16,22 @@ const Login = () => {
     fetch(`http://localhost:8000/users/login`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: data,
     })
-      .then((data) => {
-        return data.json()
+      .then(async (data) => {
+        if (data.ok) {
+          data = (await data.json())
+          if (data.message === "Success"){
+          console.log(data)
+          navigate("/home")
+        }else {
+          throw new Error (data.message)
+        }
+        }
       })
-      .then((res) => {
-        console.log(res)
-      })
+      .catch((err) => console.log(err))
   }
 
   return (
