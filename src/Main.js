@@ -4,6 +4,8 @@ import RightSidebar from "./RightSidebar"
 import ChatWindow from "./ChatWindow"
 
 const Main = () => {
+
+
   return (
     <div className="main-content">
       <Navbar />

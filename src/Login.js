@@ -1,12 +1,16 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
+import { useContext } from "react"
+import { UserContext } from "./contexts/UserContext"
 
 const Login = () => {
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const { setUser } = useContext(UserContext)
 
   const handleLogin = (e) => {
+    
     e.preventDefault()
     const data = new URLSearchParams({
       username: `${username}`,
@@ -22,13 +26,13 @@ const Login = () => {
     })
       .then(async (data) => {
         if (data.ok) {
-          data = (await data.json())
-          if (data.message === "Success"){
-          console.log(data)
-          navigate("/home")
-        }else {
-          throw new Error (data.message)
-        }
+          data = await data.json()
+          if (data.message === "Success") {
+            setUser(data)
+            navigate("/home")
+          } else {
+            throw new Error(data.message)
+          }
         }
       })
       .catch((err) => console.log(err))
