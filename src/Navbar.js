@@ -6,7 +6,8 @@ const Navbar = () => {
     return ( 
         <div className="navbar flex">
             <img src="icon.png" alt="apollo icon" />
-            <h1>Apollo Chat! {user.username}</h1>
+            <h1>Apollo Chat!</h1>
+            <h2>Hello, {user.username}!</h2>
         </div>
      );
 }

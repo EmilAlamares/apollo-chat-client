@@ -10,7 +10,6 @@ const Login = () => {
   const { setUser } = useContext(UserContext)
 
   const handleLogin = (e) => {
-    
     e.preventDefault()
     const data = new URLSearchParams({
       username: `${username}`,
@@ -41,8 +40,8 @@ const Login = () => {
   return (
     <div className="align-center flex">
       <div className="login-container">
-        <h1>Login</h1>
-        <h2>Apollo Chat!</h2>
+        <h1>Apollo Chat!</h1>
+        <h2>Login</h2>
         <form>
           <input
             type="text"
@@ -51,14 +50,16 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)}
             value={username}
             required
+            autoComplete="off"
           />
           <input
             type="password"
-            style={{ marginBottom: "20px" }}
+            style={{ marginBottom: "30px" }}
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             required
+            autoComplete="off"
           />
           <div className="flex">
             <Link to="/register">
@@ -67,6 +68,7 @@ const Login = () => {
             <button onClick={(e) => handleLogin(e)}>Login</button>
           </div>
         </form>
+        <button className="back-btn" onClick={() => navigate("/")}>Back</button>
       </div>
     </div>
   )

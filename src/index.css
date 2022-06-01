@@ -2,16 +2,22 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  /* font-family: "Roboto", sans-serif; */
+  font-family: "ABeeZee", sans-serif;
 }
 
-input::-webkit-input-placeholder{
-  color: #C49E85;
+a {
+  text-decoration: none;
 }
 
-input, textarea {
-  caret-color: #41362F;
-  color: #41362F;
+input::-webkit-input-placeholder {
+  color: #A9B3BC;
+}
+
+input,
+textarea {
+  caret-color: #424b54;
+  color: #424b54;
 }
 
 .container {
@@ -22,10 +28,11 @@ input, textarea {
 /* Navbar */
 
 .navbar {
-  background-color: #41362f;
+  background-color: #424b54;
   padding: 13px 0px;
   height: 50px;
   align-items: center;
+  position: relative;
 }
 
 .navbar img {
@@ -33,24 +40,90 @@ input, textarea {
 }
 
 .navbar h1 {
-  color: #c49e85;
+  color: #fff;
   font-size: 17px;
   text-transform: uppercase;
   margin-left: 15px;
-  letter-spacing: 6px;
+  letter-spacing: 2px;
+}
+
+.navbar h2{
+  color: #fff;
+  font-size: 17px;
+  text-transform: capitalize;
+  letter-spacing: 2px;
+  position: absolute;
+  right: 30px;
+}
+
+/* Welcome Page */
+.welcome-container {
+  background: #f4f5f6;
+  width: 100%;
+  height: 100%;
+  margin: 0px auto;
+  text-align: center;
+  border: #424b54 solid;
+  max-width: 600px;
+  max-height: 600px;
+  overflow: hidden;
+}
+
+.welcome-container h2 {
+  margin-top: 95px !important;
+}
+
+.login-btn {
+  margin: 75px auto 0px;
+  display: block;
+  border: none;
+  background: #85c7f2;
+  color: #ffffff;
+  font-size: 30px;
+  width: 350px;
+  height: 70px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.login-btn:hover {
+  background: #47aaeb;
+  transition: 0.2s;
+}
+
+.register-btn {
+  margin: 30px auto 0px;
+  display: block;
+  background: #f4f5f6;
+  border: #424b54 1px solid;
+  color: #424b54;
+  font-size: 30px;
+  width: 350px;
+  height: 70px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.register-btn:hover {
+  background: #47aaeb;
+  transition: 0.2s;
+  color: #f4f5f6;
+  border: none;
 }
 
 /* Main Content */
 .main-content {
   height: 100%;
-  background-color: #f2d6bc;
+  background-color: #f4f5f6;
 }
 
 /* Left Sidebar */
 .left-sidebar-container {
   width: 100%;
   height: 100%;
-  border-right: #41362f 1px solid;
+  border-right: #424b54 1px solid;
   flex: 1;
 }
 
@@ -58,23 +131,23 @@ input, textarea {
 .chat-window-header,
 .right-sidebar-header {
   height: 85px;
-  border-bottom: #41362f 1px solid;
+  border-bottom: #424b54 1px solid;
   text-align: center;
 }
 
-.searchBar-container{
-  border:none;
+.searchBar-container {
+  border: none;
 }
 
 .searchBar-container input {
   width: 300px;
   height: 40px;
-  color: #41362f;
-  border-radius: 10px;
-  border: 1px #41362f solid;
+  color: #424b54;
+  border-radius: 25px;
+  border: 1px #424b54 solid;
   padding: 15px 20px;
   font-size: 15px;
-  background-color: #fcf0e8;
+  background-color: #fff;
   margin: 23px;
 }
 
@@ -93,12 +166,12 @@ input, textarea {
 }
 
 .chat-content {
-  background: #fcf0e8;
+  background: #fff;
   flex: 1;
 }
 
 .chat-box {
-  border-top: 1px solid #41362f;
+  border-top: 1px solid #424b54;
 }
 
 .chat-box form {
@@ -110,19 +183,20 @@ input, textarea {
 .chat-box textarea {
   max-height: 125px;
   width: 100%;
-  border: 8px solid #fcf0e8;
+  border: 8px solid #fff;
   height: 36px;
   font-size: 15px;
   resize: none;
   outline: none;
-  background-color: transparent;
   padding: 0px 4px;
 }
 
-.chat-box-input-container{
-  border-radius: 15px;
+.chat-box-input-container {
+  border-radius: 25px;
   overflow: hidden;
-  background-color:#fcf0e8;
+  border: 1px solid #424b54;
+  padding: 0px 20px;
+  background: white;
 }
 
 .chat-box button {
@@ -140,7 +214,7 @@ input, textarea {
   width: 100%;
   height: 100%;
   flex: 1;
-  border-left: #41362f 1px solid;
+  border-left: #424b54 1px solid;
 }
 
 .right-sidebar-header {
@@ -152,36 +226,41 @@ input, textarea {
 .login-container {
   margin: 0px auto;
   text-align: center;
-  border: #6b4b3e solid;
+  border: #424b54 solid;
   max-width: 600px;
   max-height: 600px;
   overflow: hidden;
+  position: relative;
+  background-color: #f4f5f6;
 }
 
+.welcome-container h1,
 .login-container h1 {
-  background-color: #c49e85;
-  color: #f8f4f9;
-  border-bottom: #6b4b3e solid 2px;
+  background-color: #85c7f2;
+  color: #f4f5f6;
+  border-bottom: #424b54 solid 2px;
   height: 66px;
   padding: 12px 0px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.login-container h2, .create-container h2 {
-  color: #41362f;
+.login-container h2,
+.welcome-container h2,
+.create-container h2 {
+  color: #424b54;
   font-size: 32px;
   text-transform: uppercase;
   margin-top: 50px;
-  letter-spacing: 5px;
-  font-family: "Roboto";
+  letter-spacing: 1px;
 }
 
 .login-container input {
   display: block;
-  border: #41362f 2px solid;
+  border: #424b54 2px solid;
   width: 350px;
   height: 70px;
-  background-color: #fbe9dd;
-  border-radius: 10px;
+  border-radius: 25px;
   padding: 30px 20px;
   font-size: 25px;
 }
@@ -200,12 +279,18 @@ input, textarea {
   border: none;
   background-color: transparent;
   font-weight: bold;
-  color: #41362f;
+  color: #424b54;
   font-size: 20px;
   cursor: pointer;
 }
 
-/* Create Account */ 
+.login-container .back-btn{
+  position: absolute;
+  bottom: 15px;
+  left: 25px;
+}
+
+/* Create Account */
 .create-container button {
   float: right;
 }
