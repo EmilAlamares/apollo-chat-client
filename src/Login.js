@@ -2,40 +2,42 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { useContext } from "react"
 import { UserContext } from "./contexts/UserContext"
+import axios from "axios"
 
 const Login = () => {
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const {setUser} = useContext(UserContext)
+  const { setUser } = useContext(UserContext)
 
   const handleLogin = (e) => {
     e.preventDefault()
+
     const data = new URLSearchParams({
       username: `${username}`,
       password: `${password}`,
     }).toString()
 
-    fetch(`http://localhost:8000/users/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: data,
-    })
-      .then(async (data) => {
-        if (data.ok) {
-          data = await data.json()
-          if (data.message === "Success") {
-            setUser(data)
-            localStorage.setItem('user', JSON.stringify(data))
-            navigate("/home")
-          } else {
-            throw new Error(data.message)
-          }
+    axios
+      .post(
+        `http://localhost:8000/users/login`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
         }
+      )
+      .then((response) => {
+        if (response.data.message === 'Success')
+        {
+          setUser(response.data)
+          localStorage.setItem('user', JSON.stringify(response.data))
+          navigate("/home")
+        }
+        else console.log(`Error: ${response.data.message}`)
       })
-      .catch((err) => console.log(err))
+      .catch(err => console.log(err))
   }
 
   return (
@@ -69,7 +71,9 @@ const Login = () => {
             <button onClick={(e) => handleLogin(e)}>Login</button>
           </div>
         </form>
-        <button className="back-btn" onClick={() => navigate("/")}>Back</button>
+        <button className="back-btn" onClick={() => navigate("/")}>
+          Back
+        </button>
       </div>
     </div>
   )

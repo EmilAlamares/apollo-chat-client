@@ -5,6 +5,9 @@ import Main from "./Main"
 import Welcome from "./Welcome"
 import UserContextProvider from "./contexts/UserContext"
 import PrivateRoute from "./PrivateRoute"
+import axios from "axios"
+
+axios.defaults.headers.common['Authorization'] = `Bearer: ${JSON.parse(localStorage.getItem('user')).token}`;
 
 const App = () => {
   return (
