@@ -3,36 +3,34 @@ import CreateAccount from "./CreateAccount"
 import Login from "./Login"
 import Main from "./Main"
 import Welcome from "./Welcome"
-import { UserContext } from "./contexts/UserContext"
-import { useState } from "react"
+import UserContextProvider from "./contexts/UserContext"
+import PrivateRoute from "./PrivateRoute"
 
 const App = () => {
-  const [user, setUser] = useState("")
   return (
-    <UserContext.Provider value={{user, setUser}}>
-    <Router>
-      <div className="App">
-        <div className="container">
-          <Routes>
-            <Route
-              path="/login"
-              element={
-                  <Login />
-              }
-            ></Route>
-            <Route path="/register" element={<CreateAccount />}></Route>
-            <Route
-              path="/home"
-              element={
-                  <Main />
-              }
-            ></Route>
-            <Route path="/" element={<Welcome />}></Route>
-          </Routes>
+    <UserContextProvider>
+      <Router>
+        <div className="App">
+          <div className="container">
+            <Routes>
+              <Route path="/login" element={<Login />}></Route>
+              <Route path="/register" element={<CreateAccount />}></Route>
+
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute>
+                    <Main />
+                  </PrivateRoute>
+                }
+              ></Route>
+
+              <Route path="/" element={<Welcome />}></Route>
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
-    </UserContext.Provider>
+      </Router>
+    </UserContextProvider>
   )
 }
 

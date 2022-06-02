@@ -116,7 +116,7 @@ textarea {
 /* Main Content */
 .main-content {
   height: 100%;
-  background-color: #f4f5f6;
+  background-color: #E2E6E9;
 }
 
 /* Left Sidebar */
@@ -144,10 +144,10 @@ textarea {
   height: 40px;
   color: #424b54;
   border-radius: 25px;
-  border: 1px #424b54 solid;
+  border: none;
   padding: 15px 20px;
   font-size: 15px;
-  background-color: #fff;
+  background-color: #f4f5f6;
   margin: 23px;
 }
 
@@ -166,12 +166,12 @@ textarea {
 }
 
 .chat-content {
-  background: #fff;
-  flex: 1;
+  box-shadow: inset 0px 0px 1.5px 0px;
 }
 
 .chat-box {
   border-top: 1px solid #424b54;
+
 }
 
 .chat-box form {
@@ -183,20 +183,20 @@ textarea {
 .chat-box textarea {
   max-height: 125px;
   width: 100%;
-  border: 8px solid #fff;
+  border: 8px solid #f4f5f6;
   height: 36px;
   font-size: 15px;
   resize: none;
   outline: none;
   padding: 0px 4px;
+  background: transparent;
 }
 
 .chat-box-input-container {
   border-radius: 25px;
   overflow: hidden;
-  border: 1px solid #424b54;
-  padding: 0px 20px;
-  background: white;
+  padding: 0px 5px;
+  background: #f4f5f6;
 }
 
 .chat-box button {

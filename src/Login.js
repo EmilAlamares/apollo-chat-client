@@ -7,7 +7,7 @@ const Login = () => {
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const { setUser } = useContext(UserContext)
+  const {setUser} = useContext(UserContext)
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -28,6 +28,7 @@ const Login = () => {
           data = await data.json()
           if (data.message === "Success") {
             setUser(data)
+            localStorage.setItem('user', JSON.stringify(data))
             navigate("/home")
           } else {
             throw new Error(data.message)
