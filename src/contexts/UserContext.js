@@ -7,8 +7,9 @@ const UserContextProvider = (props) => {
     JSON.parse(localStorage.getItem("user")) || {}
   )
 
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser}}>
       {props.children}
     </UserContext.Provider>
   )

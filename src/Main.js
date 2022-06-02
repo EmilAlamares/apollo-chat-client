@@ -2,15 +2,18 @@ import Navbar from "./Navbar"
 import LeftSidebar from "./LeftSidebar"
 import RightSidebar from "./RightSidebar"
 import ChatWindow from "./ChatWindow"
-import axios from "axios"
-
-
+import api from "./api/util"
+import { useNavigate } from "react-router-dom"
 
 const Main = () => {
-  axios.get(`http://localhost:8000/users/home`).then((res) => {
-    if (!res.data.message === 'Success') 
-    console.log('not good')
-  })
+  const navigate = useNavigate()
+
+  api
+    .get(`http://localhost:8000/users/home`)
+    .then((res) => {
+      if (res.data.message !== "Success")navigate('/')
+    })
+    .catch((err) => console.log(err))
 
   return (
     <div className="main-content">
