@@ -7,7 +7,7 @@ const Navbar = () => {
   const { user } = useContext(UserContext)
   return (
     <div className="navbar flex">
-      <img src="icon.png" alt="apollo icon" />
+      {/* <img src="img/icon.png" alt="apollo icon" /> */}
       <h1>Apollo Chat!</h1>
       <h2
         style={{ cursor: "pointer" }}

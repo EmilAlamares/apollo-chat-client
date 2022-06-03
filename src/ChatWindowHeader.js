@@ -1,6 +1,11 @@
 const ChatWindowHeader = () => {
   return (
-    <div className="chat-window-header">
+    <div className="chat-window-header flex">
+      <img src="img/user-img-placeholder.png"/>
+      <div>
+        <p className="user">John Doe</p>
+        <p className="status">offline</p>
+      </div>
     </div>
   )
 }
