@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 const Main = () => {
   const navigate = useNavigate()
 
+
   api
     .get(`http://localhost:8000/users/home`)
     .then((res) => {
@@ -20,7 +21,7 @@ const Main = () => {
       <Navbar />
       <div className="flex" style={{ height: "calc(100% - 50px)" }}>
         <LeftSidebar />
-        <ChatWindow />
+        <ChatWindow/>
         <RightSidebar />
       </div>
     </div>

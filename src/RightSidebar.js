@@ -1,4 +1,4 @@
-import RightSidebarHeader from "./RightSidebarHeader"
+// import RightSidebarHeader from "./RightSidebarHeader"
 import RightSidebarContent from "./RightSidebarContent"
 
 const RightSidebar = () => {

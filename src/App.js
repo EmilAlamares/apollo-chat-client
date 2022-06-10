@@ -5,12 +5,13 @@ import Main from "./Main"
 import Welcome from "./Welcome"
 import UserContextProvider from "./contexts/UserContext"
 import PrivateRoute from "./PrivateRoute"
-
-
+import SocketContextProvider from "./contexts/SocketContext"
 
 const App = () => {
+
   return (
     <UserContextProvider>
+      <SocketContextProvider>
       <Router>
         <div className="App">
           <div className="container">
@@ -32,6 +33,7 @@ const App = () => {
           </div>
         </div>
       </Router>
+      </SocketContextProvider>
     </UserContextProvider>
   )
 }

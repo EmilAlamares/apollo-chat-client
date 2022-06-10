@@ -7,7 +7,7 @@ const ChatWindow = () => {
     <div className="chat-container flex-v">
       <ChatWindowHeader/>
       <ChatContent />
-      <ChatBox />
+      <ChatBox/>
     </div>
   )
 }
