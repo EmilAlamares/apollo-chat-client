@@ -7,12 +7,10 @@ import { useNavigate } from "react-router-dom"
 
 const Main = () => {
   const navigate = useNavigate()
-
-
   api
     .get(`http://localhost:8000/users/home`)
     .then((res) => {
-      if (res.data.message !== "Success")navigate('/')
+      if (res.data.message !== "Success") navigate("/")
     })
     .catch((err) => console.log(err))
 

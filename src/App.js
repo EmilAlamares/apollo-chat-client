@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <UserContextProvider>
-      <SocketContextProvider>
+      {/* <SocketContextProvider> */}
       <Router>
         <div className="App">
           <div className="container">
@@ -33,7 +33,7 @@ const App = () => {
           </div>
         </div>
       </Router>
-      </SocketContextProvider>
+      {/* </SocketContextProvider> */}
     </UserContextProvider>
   )
 }

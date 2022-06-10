@@ -1,10 +1,11 @@
 import { useContext, useRef } from "react"
 import { SocketContext } from "./contexts/SocketContext"
+import { io } from "socket.io-client"
+import { socket } from "./utils/socket"
 
 const ChatBox = () => {
-  const { socket } = useContext(SocketContext)
   const chatBox = useRef(null)
-
+  console.log(socket)
   const autoResize = (e) => {
     e.target.style.height = "36px"
     e.target.style.height = `${e.target.scrollHeight + 16}px`
@@ -12,10 +13,10 @@ const ChatBox = () => {
 
   const handleSend = (e) => {
     e.preventDefault()
-    
-    if (chatBox.current.value !== "")
-    socket.emit('new-message', `${chatBox.current.value}`)
 
+    if (chatBox.current.value !== "")
+      socket.emit("new-message", `${chatBox.current.value}`)
+      
     chatBox.current.value = ""
     chatBox.current.focus()
   }
