@@ -1,9 +1,10 @@
-import { useContext, useRef } from "react"
-import { SocketContext } from "./contexts/SocketContext"
+import { useRef } from "react"
+// import { SocketContext } from "./contexts/SocketContext"
 import { io } from "socket.io-client"
-import { socket } from "./utils/socket"
+// import { useEffect } from "react"
 
 const ChatBox = () => {
+  const socket = io('http://localhost:8000');
   const chatBox = useRef(null)
   console.log(socket)
   const autoResize = (e) => {
