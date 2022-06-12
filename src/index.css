@@ -232,6 +232,31 @@ textarea {
 
 .chat-content {
   box-shadow: inset 0px 0px 7px #424b5475;
+  padding: 0px 10px;
+  justify-content: flex-end;
+}
+
+.msg-container{
+  align-self: flex-start;
+  max-width: 55%;
+  text-align: left;
+  margin: 10px 0px;
+}
+
+.msg-container p{
+  padding: 9px 12px;
+  background: #F4F5F6;
+  border-radius: 20px;
+  color: #424b54;
+}
+
+.own{
+  align-self: flex-end;
+}
+
+.own p{
+  background: #47AAEB;
+  color: #f4f5f6;
 }
 
 .chat-box {

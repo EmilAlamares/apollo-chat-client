@@ -4,7 +4,7 @@ import { io } from "socket.io-client"
 // import { useEffect } from "react"
 
 const ChatBox = () => {
-  const socket = io('http://localhost:8000');
+  const socket = io("http://localhost:8000")
   const chatBox = useRef(null)
   console.log(socket)
   const autoResize = (e) => {
@@ -17,9 +17,19 @@ const ChatBox = () => {
 
     if (chatBox.current.value !== "")
       socket.emit("new-message", `${chatBox.current.value}`)
-      
+
     chatBox.current.value = ""
+    chatBox.current.style.height = "36px"
     chatBox.current.focus()
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter")
+    if (!e.shiftKey) // For handling shift + enter key press.
+    {
+      e.preventDefault()
+      handleSend(e)
+    }
   }
 
   return (
@@ -34,6 +44,7 @@ const ChatBox = () => {
             onChange={(e) => {
               autoResize(e)
             }}
+            onKeyPress={(e) => handleKeyPress(e)}
             autoFocus
           />
         </div>
