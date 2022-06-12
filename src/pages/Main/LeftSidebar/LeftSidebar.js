@@ -1,4 +1,4 @@
-import Conversation from "./components/Conversation"
+import Conversation from "../../../components/Conversation"
 import SearchBar from "./SearchBar"
 
 const LeftSidebar = () => {

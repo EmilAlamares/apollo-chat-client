@@ -1,8 +1,8 @@
 import Navbar from "./Navbar"
-import LeftSidebar from "./LeftSidebar"
-import RightSidebar from "./RightSidebar"
+import LeftSidebar from "./LeftSidebar/LeftSidebar"
+import RightSidebar from "./RightSidebar/RightSidebar"
 import ChatWindow from "./ChatWindow"
-import api from "./api/util"
+import api from "../../api/util"
 import { useNavigate } from "react-router-dom"
 
 const Main = () => {

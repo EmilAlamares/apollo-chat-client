@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import CreateAccount from "./CreateAccount"
-import Login from "./Login"
-import Main from "./Main"
-import Welcome from "./Welcome"
+import CreateAccount from "./pages/CreateAccount"
+import Login from "./pages/Login"
+import Main from "./pages/Main/Main"
+import Welcome from "./pages/Welcome"
 import UserContextProvider from "./contexts/UserContext"
 import PrivateRoute from "./PrivateRoute"
-import SocketContextProvider from "./contexts/SocketContext"
+// import SocketContextProvider from "./contexts/SocketContext"
 
 const App = () => {
 
