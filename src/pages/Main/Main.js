@@ -5,6 +5,8 @@ import ChatWindow from "./ChatWindow"
 import api from "../../api/util"
 import { useNavigate } from "react-router-dom"
 
+
+
 const Main = () => {
   const navigate = useNavigate()
   api
@@ -18,7 +20,7 @@ const Main = () => {
     <div className="main-content">
       <Navbar />
       <div className="flex" style={{ height: "calc(100% - 50px)" }}>
-        <LeftSidebar />
+        <LeftSidebar/>
         <ChatWindow/>
         <RightSidebar />
       </div>
