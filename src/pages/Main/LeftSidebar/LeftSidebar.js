@@ -9,7 +9,7 @@ const LeftSidebar = () => {
   const {user} = useContext(UserContext)
 
   useEffect(() => {
-    api.get(`http://localhost:8000/conversation`).then((res) => {
+    api.get(`http://localhost:8000/conversations`).then((res) => {
       if (res.data) {
         console.log(res.data)
         setConversations(res.data.conversation)
