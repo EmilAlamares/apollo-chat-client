@@ -1,12 +1,11 @@
 import { useContext } from "react"
 import { UserContext } from "../contexts/UserContext"
+
 const Conversation = ({ selected, conv }) => {
   const { user } = useContext(UserContext)
   const otherUserName = conv.usersName.filter(
     (usersName) => usersName !== user.username
   )
-  console.log(conv._id)
-
   return (
         <div
           className={

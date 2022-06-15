@@ -1,15 +1,26 @@
 import Message from "../../components/Message"
+import { useState, useContext, useEffect } from "react"
+import { UserContext } from "../../contexts/UserContext"
+import api from "../../api/util"
+
+
 
 const ChatContent = () => {
+  const [messages, setMessages] = useState(null)
+  const {user} = useContext(UserContext)
+
+  useEffect(() => {
+    api.get(`http://localhost:8000/messages`).then((res) => {
+      if (res.data) {
+        setMessages(res.data.message)
+      }
+    })
+  }, [user])
+
+
   return (
     <div className="chat-content flex-1 flex-v">
-      <Message msg={`Hey!`}/>
-      <Message own={true} msg={`What's up?`}/>
-      <Message msg={`Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam necessitatibus praesentium, sunt ex eligendi sapiente fugit, aliquam doloribus officia, eius repellat labore atque voluptatibus repudiandae. Atque quo aliquid vero autem.`}/>
-      <Message own={true} msg={`What are you talking about? Atque quo aliquid vero autem. Aperiam necessitatibus praesentium, sunt ex eligendi sapiente fugit, aliquam doloribus officia, eius repellat labore atque voluptatibus repudiandae.`}/>
-      <Message msg={`Okay bye!`}/>
-      
-
+      {messages?.map(m => <Message msg={m.message} own={m.senderId === user.id ? true : false} key={m._id}/>)}
     </div>
   )
 }

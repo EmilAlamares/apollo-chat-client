@@ -11,12 +11,10 @@ const LeftSidebar = () => {
   useEffect(() => {
     api.get(`http://localhost:8000/conversations`).then((res) => {
       if (res.data) {
-        console.log(res.data)
         setConversations(res.data.conversation)
       }
     })
   }, [user])
-  console.log(conversations)
 
   return (
     <div className="left-sidebar-container flex-v">
