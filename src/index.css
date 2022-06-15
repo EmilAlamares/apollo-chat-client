@@ -148,6 +148,13 @@ textarea {
 
 .left-sidebar-content input[type='radio']:checked+label div{
   background: #CADEEB;
+  transition: 0.20s;
+}
+
+.left-sidebar-content input[type='radio']+label div:hover:not(
+.left-sidebar-content input[type='radio']:checked+label div 
+){
+  background: #E8EAEE;
 }
 
 .left-sidebar-content img {
