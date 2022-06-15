@@ -1,12 +1,10 @@
 import { useRef } from "react"
-// import { SocketContext } from "./contexts/SocketContext"
 import { io } from "socket.io-client"
-// import { useEffect } from "react"
 
 const ChatBox = () => {
   const socket = io("http://localhost:8000")
   const chatBox = useRef(null)
-  console.log(socket)
+  
   const autoResize = (e) => {
     e.target.style.height = "36px"
     e.target.style.height = `${e.target.scrollHeight + 16}px`

@@ -6,8 +6,8 @@ import api from "../../api/util"
 
 
 const ChatContent = () => {
-  const [messages, setMessages] = useState(null)
   const {user} = useContext(UserContext)
+  const [messages, setMessages] = useState(null)
 
   useEffect(() => {
     api.get(`http://localhost:8000/messages`).then((res) => {

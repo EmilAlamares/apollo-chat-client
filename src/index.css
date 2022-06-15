@@ -143,9 +143,10 @@ textarea {
   height: 70px;
   padding: 0px 10px;
   border-radius: 10px;
+  cursor: pointer;
 }
 
-.selected{
+.left-sidebar-content input[type='radio']:checked+label div{
   background: #CADEEB;
 }
 
