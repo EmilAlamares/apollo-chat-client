@@ -191,6 +191,7 @@ textarea {
 .searchBar-container {
   border: none;
   padding: 0px 15px;
+  position: relative;
 }
 
 .searchBar-container input {
@@ -199,7 +200,7 @@ textarea {
   color: #424b54;
   border-radius: 25px;
   border: none;
-  padding: 15px 20px;
+  padding: 15px 35px;
   font-size: 15px;
   background-color: #f4f5f6;
   margin: 23px auto;
@@ -207,6 +208,19 @@ textarea {
 
 .searchBar-container input:focus {
   outline: none;
+  padding-left: 17px;
+}
+
+.searchBar-container input:focus+img {
+  display: none;
+}
+
+.searchBar-container img {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 36px;
+  left: 30px;
 }
 
 /* Chat UI */
@@ -240,7 +254,7 @@ textarea {
 
 .chat-content {
   box-shadow: inset 0px 0px 7px #424b5475;
-  padding: 0px 10px;
+  padding: 10px 10px;
   justify-content: flex-end;
 }
 
@@ -248,7 +262,7 @@ textarea {
   align-self: flex-start;
   max-width: 55%;
   text-align: left;
-  margin: 10px 0px;
+  margin: 1px 0px;
 }
 
 .msg-container p{
@@ -303,7 +317,7 @@ textarea {
   margin-left: 20px;
   width: 30px;
   height: 30px;
-  background-image: url("../public/sendButton.png");
+  background-image: url("../public/img/sendButton.png");
 }
 
 /* Right Sidebar */

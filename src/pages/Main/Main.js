@@ -53,10 +53,8 @@ const Main = () => {
 
     if (chatBox.current.value !== ""){
       newMessage = {message: chatBox.current.value, senderId: user.id}
-      console.log(newMessage)
       socket.current.emit("new-message", `${newMessage.message}`)
-      // setMessages([...messages, newMessage])
-      console.log(messages)
+      setMessages([...messages, newMessage])
     }
 
     chatBox.current.value = ""
@@ -88,6 +86,7 @@ const Main = () => {
         <div className="left-sidebar-container flex-v">
           <div className="searchBar-container">
             <input type="text" placeholder="Search..." />
+            <img src="img/search-bar-icon.png" alt="search icon" />
           </div>
           <div className="left-sidebar-content">
             <div onChange={(e) => {
