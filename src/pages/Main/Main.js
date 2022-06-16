@@ -10,11 +10,17 @@ import { io } from "socket.io-client"
 const Main = () => {
   const [conversations, setConversations] = useState(null)
   const [messages, setMessages] = useState(null)
+  const [selectedConversation, setSelectedConversation] = useState(null)
   const { user } = useContext(UserContext)
-  const socket = io("http://localhost:8000")
   const chatBox = useRef(null)
   const navigate = useNavigate()
-
+  let socket = useRef(null)
+  
+  // Connect socket
+  useEffect(() => {
+    socket.current = io("http://localhost:8000")
+    console.log(socket)
+  }, [])
 
   // Get conversations
   useEffect(() => {
@@ -27,12 +33,12 @@ const Main = () => {
 
   // Get messages
   useEffect(() => {
-    api.get(`http://localhost:8000/messages`).then((res) => {
+    api.get(`http://localhost:8000/messages/${selectedConversation}`).then((res) => {
       if (res.data) {
         setMessages(res.data.message)
       }
     })
-  }, [user])
+  }, [selectedConversation])
 
   // Auto resizing of the chat-box textarea
   const autoResize = (e) => {
@@ -40,18 +46,25 @@ const Main = () => {
     e.target.style.height = `${e.target.scrollHeight + 16}px`
   }
 
-  // Handling Send
+  // Handling sending message.
   const handleSend = (e) => {
     e.preventDefault()
+    let newMessage = ''
 
-    if (chatBox.current.value !== "")
-      socket.emit("new-message", `${chatBox.current.value}`)
+    if (chatBox.current.value !== ""){
+      newMessage = {message: chatBox.current.value, senderId: user.id}
+      console.log(newMessage)
+      socket.current.emit("new-message", `${newMessage.message}`)
+      // setMessages([...messages, newMessage])
+      console.log(messages)
+    }
 
     chatBox.current.value = ""
     chatBox.current.style.height = "36px"
     chatBox.current.focus()
   }
 
+  // Handling key press in chat textarea.
   const handleKeyPress = (e) => {
     if (e.key === "Enter")
       if (!e.shiftKey) {
@@ -77,7 +90,9 @@ const Main = () => {
             <input type="text" placeholder="Search..." />
           </div>
           <div className="left-sidebar-content">
-            <div onChange={(e) => console.log(`Conversation: ${e.target.id}`)}>
+            <div onChange={(e) => {
+              setSelectedConversation(e.target.id)
+              }}>
             {conversations?.map((c) => (
               <Conversation conv={c} key={c._id} />
             ))}

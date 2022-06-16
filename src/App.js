@@ -20,7 +20,7 @@ const App = () => {
               <Route path="/register" element={<CreateAccount />}></Route>
 
               <Route
-                path="/home"
+                path="/chats"
                 element={
                   <PrivateRoute>
                     <Main />

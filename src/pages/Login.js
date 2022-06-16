@@ -33,7 +33,7 @@ const Login = () => {
         {
           setUser(response.data)
           localStorage.setItem('user', JSON.stringify(response.data))
-          navigate("/home")
+          navigate("/chats")
         }
         else console.log(`Error: ${response.data.message}`)
       })
