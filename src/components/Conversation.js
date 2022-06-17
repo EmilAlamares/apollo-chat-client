@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react"
 import { UserContext } from "../contexts/UserContext"
 
-const Conversation = ({ conv }) => {
+const Conversation = ({ conv, index }) => {
   const { user } = useContext(UserContext)
   const otherUserName = conv.usersName.filter(
     (usersName) => usersName !== user.username
@@ -10,7 +10,7 @@ const Conversation = ({ conv }) => {
 
   return (
     <>
-      <input type="radio" id={conv._id} name="convos" style={{display: "none"}}/>
+      <input type="radio" id={conv._id} name="convos" style={{display: "none"}} defaultChecked={index === 0 ? true : false}/>
       <label htmlFor={conv._id}>
         <div className={"conversation flex"}>
           <img src={"img/user-img-placeholder-2.png"} alt="User" />

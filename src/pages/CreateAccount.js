@@ -36,7 +36,7 @@ const CreateAccount = () => {
           data = await data.json()
           if (data.message === "Success") {
             setUser(data)
-            navigate("/home")
+            navigate("/chats")
           } else {
             throw new Error(data.message)
           }

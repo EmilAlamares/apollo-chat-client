@@ -6,7 +6,7 @@ const Welcome = () => {
   const isLoggedIn = localStorage.hasOwnProperty("user")
   
   useEffect(() => {
-    if (isLoggedIn) navigate("/home")
+    if (isLoggedIn) navigate("/chats")
   })
 
   return (
