@@ -12,7 +12,7 @@ const Conversation = ({ conv, index, selectedId }) => {
     {/* I put prevent default on onClick to set the checked attribute only AFTER the api call.
         Otherwise, the component will be styled as "checked" already even though the
         rest of the page are still displaying the previous data.*/}
-      <input type="radio" id={conv._id} name="convos" style={{display: "none"}} checked={selectedId === conv._id} onClick={e => e.preventDefault()}/> 
+      <input type="radio" id={conv._id} name="convos" style={{display: "none"}} checked={selectedId === conv._id} onClick={e => e.preventDefault()} readOnly/> 
       <label htmlFor={conv._id}>
         <div className={"conversation flex"}>
           <img src={"img/user-img-placeholder-2.png"} alt="User" />

@@ -281,14 +281,14 @@ textarea {
   color: #f4f5f6;
 }
 
-.chat-box {
+/* .chat-box {
   border-top: 1px solid #424b54;
-}
+} */
 
 .chat-box form {
   align-items: center;
   flex: 1;
-  margin: 10px 40px 10px 40px;
+  margin: 10px 10px 10px 40px;
 }
 
 .chat-box textarea {
@@ -314,10 +314,20 @@ textarea {
   border: none;
   background-color: transparent;
   cursor: pointer;
-  margin-left: 20px;
-  width: 30px;
-  height: 30px;
-  background-image: url("../public/img/sendButton.png");
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+  background-image: url('../public/img/send-button.png');
+  background-repeat: no-repeat;
+  padding: 18px;
+  background-position: center;
+  background-position-x: 10px;
+  border-radius: 50%;
+}
+
+.chat-box button:hover{
+  /* background-color: rgba(255, 255, 255, 0.356); */
+  background-color: #f4f5f6;
 }
 
 /* Right Sidebar */
