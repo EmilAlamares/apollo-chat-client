@@ -6,7 +6,8 @@
   font-family: "ABeeZee", sans-serif;
 }
 
-p, h1{
+p,
+h1 {
   color: #424b54;
 }
 
@@ -128,7 +129,7 @@ textarea {
 .left-sidebar-container {
   width: 100%;
   height: 100%;
-  border-right: #424b54 1px solid;
+  border-right: #424b546b 1px solid;
   flex: 1;
 }
 
@@ -146,15 +147,16 @@ textarea {
   cursor: pointer;
 }
 
-.left-sidebar-content input[type='radio']:checked+label div{
-  background: #CADEEB;
-  transition: 0.20s;
+.left-sidebar-content input[type="radio"]:checked + label div {
+  background: #cadeeb;
+  transition: 0.2s;
 }
 
-.left-sidebar-content input[type='radio']+label div:hover:not(
-.left-sidebar-content input[type='radio']:checked+label div 
-){
-  background: #E8EAEE;
+.left-sidebar-content
+  input[type="radio"]
+  + label
+  div:hover:not(.left-sidebar-content input[type="radio"]:checked + label div) {
+  background: #e8eaee;
 }
 
 .left-sidebar-content img {
@@ -171,20 +173,19 @@ textarea {
   font-size: 16px;
 }
 
-.left-sidebar-content p{
+.left-sidebar-content p {
   font-size: 12px;
-  color: #92989F;
+  color: #92989f;
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 240px;
   overflow: hidden;
 }
 
-.searchBar-container,
-.chat-window-header,
-.right-sidebar-header {
+.chat-window-header
+{
   height: 85px;
-  border-bottom: #424b54 1px solid;
+  border-bottom: #424b546b 1px solid;
   text-align: center;
 }
 
@@ -211,7 +212,7 @@ textarea {
   padding-left: 17px;
 }
 
-.searchBar-container input:focus+img {
+.searchBar-container input:focus + img {
   display: none;
 }
 
@@ -258,26 +259,26 @@ textarea {
   justify-content: flex-end;
 }
 
-.msg-container{
+.msg-container {
   align-self: flex-start;
   max-width: 55%;
   text-align: left;
   margin: 1px 0px;
 }
 
-.msg-container p{
+.msg-container p {
   padding: 9px 12px;
-  background: #F4F5F6;
+  background: #f4f5f6;
   border-radius: 20px;
   color: #424b54;
 }
 
-.own{
+.own {
   align-self: flex-end;
 }
 
-.own p{
-  background: #47AAEB;
+.own p {
+  background: #47aaeb;
   color: #f4f5f6;
 }
 
@@ -317,7 +318,7 @@ textarea {
   margin-left: 10px;
   width: 20px;
   height: 20px;
-  background-image: url('../public/img/send-button.png');
+  background-image: url("../public/img/send-button.png");
   background-repeat: no-repeat;
   padding: 18px;
   background-position: center;
@@ -325,7 +326,7 @@ textarea {
   border-radius: 50%;
 }
 
-.chat-box button:hover{
+.chat-box button:hover {
   /* background-color: rgba(255, 255, 255, 0.356); */
   background-color: #f4f5f6;
 }
@@ -335,7 +336,7 @@ textarea {
   width: 100%;
   height: 100%;
   flex: 1;
-  border-left: #424b54 1px solid;
+  border-left: #424b546b 1px solid;
 }
 
 .right-sidebar-header {
