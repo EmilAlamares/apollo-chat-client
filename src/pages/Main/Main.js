@@ -43,7 +43,7 @@ const Main = () => {
           setOtherUser(otherUser)
         }
       })
-  }, [selectedConversation])
+  }, [selectedConversation, user.username])
 
   // Get messages
   useEffect(() => {
@@ -113,7 +113,7 @@ const Main = () => {
                   }}
                 >
                   {conversations?.map((c, index) => (
-                    <Conversation conv={c} key={c._id} index={index}/>
+                    <Conversation conv={c} key={c._id} index={index} selectedId={selectedConversation}/>
                   ))}
                 </div>
               </div>

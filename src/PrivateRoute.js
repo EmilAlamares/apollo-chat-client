@@ -1,7 +1,5 @@
-import { Navigate } from "react-router-dom";
-
 const PrivateRoute = (props) => {
-    const isLoggedIn = localStorage.hasOwnProperty('user')
+    // const isLoggedIn = localStorage.hasOwnProperty('user') // Use cookies for auth in the future.
 
     // return isLoggedIn ? props.children : <Navigate to={'/'}/>
     return props.children
