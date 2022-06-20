@@ -27,22 +27,24 @@ const Main = () => {
     api.get(`http://localhost:8000/conversations`).then((res) => {
       if (res.data) {
         setConversations(res.data.conversation)
-        setSelectedConversation(res.data.conversation[0]._id)
+        setSelectedConversation(res.data.conversation[0]?._id)
       }
     })
   }, [user])
 
   // Get other user(s) info
   useEffect(() => {
-    if(selectedConversation)
-    api
-      .get(`http://localhost:8000/conversations/${selectedConversation}`)
-      .then((res) => {
-        if (res.data) {
-          const otherUser = (res.data.conversation[0].usersName.filter(x => x !== user.username))[0]
-          setOtherUser(otherUser)
-        }
-      })
+    if (selectedConversation)
+      api
+        .get(`http://localhost:8000/conversations/${selectedConversation}`)
+        .then((res) => {
+          if (res.data) {
+            const otherUser = res.data.conversation[0].usersName.filter(
+              (x) => x !== user.username
+            )[0]
+            setOtherUser(otherUser)
+          }
+        })
   }, [selectedConversation, user.username])
 
   // Get messages
@@ -91,7 +93,10 @@ const Main = () => {
   api
     .get(`http://localhost:8000/users/home`)
     .then((res) => {
-      if (res.data.message !== "Success") navigate("/")
+      if (res.data.message !== "Success") {
+        navigate("/")
+        localStorage.clear()
+      }
     })
     .catch((err) => console.log(err))
 
@@ -106,6 +111,10 @@ const Main = () => {
                 <input type="text" placeholder="Search..." />
                 <img src="img/search-bar-icon.png" alt="search icon" />
               </div>
+              <div className="search-results-container">
+                <div className="search-results-card">test</div>
+                <div className="search-results-card">test</div>
+              </div>
               <div className="left-sidebar-content">
                 <div
                   onChange={(e) => {
@@ -113,7 +122,12 @@ const Main = () => {
                   }}
                 >
                   {conversations?.map((c, index) => (
-                    <Conversation conv={c} key={c._id} index={index} selectedId={selectedConversation}/>
+                    <Conversation
+                      conv={c}
+                      key={c._id}
+                      index={index}
+                      selectedId={selectedConversation}
+                    />
                   ))}
                 </div>
               </div>
