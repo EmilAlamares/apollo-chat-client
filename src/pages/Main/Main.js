@@ -13,7 +13,7 @@ const Main = () => {
   const [messages, setMessages] = useState(null)
   const [selectedConversation, setSelectedConversation] = useState(null)
   const [otherUser, setOtherUser] = useState(null)
-  const [searchUser,  setSearchUser] = useState('')
+  const [searchUser, setSearchUser] = useState("")
   const [searchResults, setSearchResults] = useState(null)
   const { user } = useContext(UserContext)
   const chatBox = useRef(null)
@@ -22,14 +22,14 @@ const Main = () => {
 
   // Soft verification -- to be optimized in the future.
   api
-  .get(`http://localhost:8000/home`)
-  .then((res) => {
-    if (res.data.message !== "Success") {
-      navigate("/")
-      localStorage.clear()
-    }
-  })
-  .catch((err) => console.log(err))
+    .get(`http://localhost:8000/home`)
+    .then((res) => {
+      if (res.data.message !== "Success") {
+        navigate("/")
+        localStorage.clear()
+      }
+    })
+    .catch((err) => console.log(err))
 
   // Connect socket
   useEffect(() => {
@@ -40,7 +40,7 @@ const Main = () => {
   useEffect(() => {
     api.get(`http://localhost:8000/conversations`).then((res) => {
       if (res.data) {
-        const {conversation} = res.data
+        const { conversation } = res.data
         setConversations(conversation)
         setSelectedConversation(conversation ? conversation[0]._id : null)
       }
@@ -73,7 +73,7 @@ const Main = () => {
       })
   }, [selectedConversation])
 
-  // Handle user search.
+ // Handle user search.
   useEffect(() => {
     api
     .get(`http://localhost:8000/users/${searchUser}`)
@@ -122,12 +122,20 @@ const Main = () => {
           <div className="flex" style={{ height: "calc(100% - 50px)" }}>
             <div className="left-sidebar-container flex-v">
               <div className="searchBar-container">
-                <input type="text" placeholder="Search..." value={searchUser} onChange={(e) => {setSearchUser(e.target.value)}}/>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchUser}
+                  onChange={(e) => {
+                    setSearchUser(e.target.value)
+                  }}
+                />
                 <img src="img/search-bar-icon.png" alt="search icon" />
               </div>
               <div className="search-results-container">
-            
-            {searchResults.map(user => (<SearchResultCard user={user} key={user._id}/>))}
+                {searchResults?.map((user) => (
+                  <SearchResultCard user={user} key={user._id} />
+                ))}
               </div>
               <div className="left-sidebar-content">
                 <div
