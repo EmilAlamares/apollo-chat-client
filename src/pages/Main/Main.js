@@ -6,16 +6,30 @@ import { useState, useEffect, useContext, useRef } from "react"
 import { UserContext } from "../../contexts/UserContext"
 import Conversation from "../../components/Conversation"
 import { io } from "socket.io-client"
+import SearchResultCard from "../../components/SearchResultCard"
 
 const Main = () => {
   const [conversations, setConversations] = useState(null)
   const [messages, setMessages] = useState(null)
   const [selectedConversation, setSelectedConversation] = useState(null)
   const [otherUser, setOtherUser] = useState(null)
+  const [searchUser,  setSearchUser] = useState('')
+  const [searchResults, setSearchResults] = useState(null)
   const { user } = useContext(UserContext)
   const chatBox = useRef(null)
   const navigate = useNavigate()
   let socket = useRef(null)
+
+  // Soft verification -- to be optimized in the future.
+  api
+  .get(`http://localhost:8000/home`)
+  .then((res) => {
+    if (res.data.message !== "Success") {
+      navigate("/")
+      localStorage.clear()
+    }
+  })
+  .catch((err) => console.log(err))
 
   // Connect socket
   useEffect(() => {
@@ -26,8 +40,9 @@ const Main = () => {
   useEffect(() => {
     api.get(`http://localhost:8000/conversations`).then((res) => {
       if (res.data) {
-        setConversations(res.data.conversation)
-        setSelectedConversation(res.data.conversation[0]?._id)
+        const {conversation} = res.data
+        setConversations(conversation)
+        setSelectedConversation(conversation ? conversation[0]._id : null)
       }
     })
   }, [user])
@@ -57,6 +72,15 @@ const Main = () => {
         }
       })
   }, [selectedConversation])
+
+  // Handle user search.
+  useEffect(() => {
+    api
+    .get(`http://localhost:8000/users/${searchUser}`)
+    .then(res => {
+      setSearchResults(res.data.user)
+    })
+  }, [searchUser])
 
   // Auto resizing of the chat-box textarea
   const autoResize = (e) => {
@@ -90,16 +114,6 @@ const Main = () => {
       }
   }
 
-  api
-    .get(`http://localhost:8000/users/home`)
-    .then((res) => {
-      if (res.data.message !== "Success") {
-        navigate("/")
-        localStorage.clear()
-      }
-    })
-    .catch((err) => console.log(err))
-
   return (
     <>
       {conversations && otherUser && (
@@ -108,18 +122,12 @@ const Main = () => {
           <div className="flex" style={{ height: "calc(100% - 50px)" }}>
             <div className="left-sidebar-container flex-v">
               <div className="searchBar-container">
-                <input type="text" placeholder="Search..." />
+                <input type="text" placeholder="Search..." value={searchUser} onChange={(e) => {setSearchUser(e.target.value)}}/>
                 <img src="img/search-bar-icon.png" alt="search icon" />
               </div>
               <div className="search-results-container">
-                <div className="search-results-card flex">
-                <img src="img/user-img-placeholder.png" alt="" />
-                <p>John Doe</p>
-                </div>
-                <div className="search-results-card flex">
-                <img src="img/user-img-placeholder.png" alt="" />
-                <p>Alexia Huertas</p>
-                </div>
+            
+            {searchResults.map(user => (<SearchResultCard user={user} key={user._id}/>))}
               </div>
               <div className="left-sidebar-content">
                 <div
