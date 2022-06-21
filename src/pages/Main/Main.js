@@ -10,15 +10,18 @@ import SearchResultCard from "../../components/SearchResultCard"
 
 const Main = () => {
   const [conversations, setConversations] = useState(null)
-  const [messages, setMessages] = useState(null)
   const [selectedConversation, setSelectedConversation] = useState(null)
+  const [messages, setMessages] = useState(null)
   const [otherUser, setOtherUser] = useState(null)
   const [searchUser, setSearchUser] = useState("")
   const [searchResults, setSearchResults] = useState(null)
+  const [searchBarFocus, setSearchBarFocus] = useState(false)
   const { user } = useContext(UserContext)
   const chatBox = useRef(null)
   const navigate = useNavigate()
   let socket = useRef(null)
+
+
 
   // Soft verification -- to be optimized in the future.
   api
@@ -73,13 +76,15 @@ const Main = () => {
       })
   }, [selectedConversation])
 
- // Handle user search.
+  // Handle user search.
   useEffect(() => {
-    api
-    .get(`http://localhost:8000/users/${searchUser}`)
-    .then(res => {
-      setSearchResults(res.data.user)
-    })
+    if (searchUser !== "") {
+      api.get(`http://localhost:8000/users/${searchUser}`).then((res) => {
+        setSearchResults(res.data.user)
+      })
+    } else {
+      setSearchResults(null)
+    }
   }, [searchUser])
 
   // Auto resizing of the chat-box textarea
@@ -129,14 +134,20 @@ const Main = () => {
                   onChange={(e) => {
                     setSearchUser(e.target.value)
                   }}
+                  style={searchUser && searchResults?.length > 0 && searchBarFocus ? {borderRadius: '20px 20px 0 0'} : {}}
+                  onFocus={() => setSearchBarFocus(true)}
+                  onBlur={() => setSearchBarFocus(false)}
                 />
                 <img src="img/search-bar-icon.png" alt="search icon" />
               </div>
-              <div className="search-results-container">
-                {searchResults?.map((user) => (
-                  <SearchResultCard user={user} key={user._id} />
-                ))}
-              </div>
+              {searchUser && searchResults?.length > 0 && searchBarFocus &&
+              (
+                <div className="search-results-container">
+                  {searchResults?.map((user) => (
+                    <SearchResultCard user={user} key={user._id} />
+                  ))}
+                </div>
+              )}
               <div className="left-sidebar-content">
                 <div
                   onChange={(e) => {
