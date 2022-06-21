@@ -112,8 +112,14 @@ const Main = () => {
                 <img src="img/search-bar-icon.png" alt="search icon" />
               </div>
               <div className="search-results-container">
-                <div className="search-results-card">test</div>
-                <div className="search-results-card">test</div>
+                <div className="search-results-card flex">
+                <img src="img/user-img-placeholder.png" alt="" />
+                <p>John Doe</p>
+                </div>
+                <div className="search-results-card flex">
+                <img src="img/user-img-placeholder.png" alt="" />
+                <p>Alexia Huertas</p>
+                </div>
               </div>
               <div className="left-sidebar-content">
                 <div
