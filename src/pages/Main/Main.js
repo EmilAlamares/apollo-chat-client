@@ -21,8 +21,6 @@ const Main = () => {
   const navigate = useNavigate()
   let socket = useRef(null)
 
-
-
   // Soft verification -- to be optimized in the future.
   api
     .get(`http://localhost:8000/home`)
@@ -45,8 +43,10 @@ const Main = () => {
       if (res.data) {
         const { conversation } = res.data
         setConversations(conversation)
-        setSelectedConversation(conversation ? conversation[0]._id : null)
+        setSelectedConversation(conversation[0] ? conversation[0]._id : null)
       }
+
+      if (!res.data.conversation[0]) setOtherUser(true) // To allow the rendering when there's no available conversation.
     })
   }, [user])
 
@@ -57,13 +57,20 @@ const Main = () => {
         .get(`http://localhost:8000/conversations/${selectedConversation}`)
         .then((res) => {
           if (res.data) {
-            const otherUser = res.data.conversation[0].usersName.filter(
+            const username = res.data.conversation[0].usersName.filter(
               (x) => x !== user.username
             )[0]
-            setOtherUser(otherUser)
+            const id = res.data.conversation[0].users.filter(
+              (x) => x !== user.id
+            )[0]
+
+            setOtherUser({
+              username,
+              id
+            })
           }
         })
-  }, [selectedConversation, user.username])
+  }, [selectedConversation, user])
 
   // Get messages
   useEffect(() => {
@@ -134,14 +141,17 @@ const Main = () => {
                   onChange={(e) => {
                     setSearchUser(e.target.value)
                   }}
-                  style={searchUser && searchResults?.length > 0 && searchBarFocus ? {borderRadius: '20px 20px 0 0'} : {}}
+                  style={
+                    searchUser && searchResults?.length > 0 && searchBarFocus
+                      ? { borderRadius: "20px 20px 0 0" }
+                      : {}
+                  }
                   onFocus={() => setSearchBarFocus(true)}
                   onBlur={() => setSearchBarFocus(false)}
                 />
                 <img src="img/search-bar-icon.png" alt="search icon" />
               </div>
-              {searchUser && searchResults?.length > 0 && searchBarFocus &&
-              (
+              {searchUser && searchResults?.length > 0 && searchBarFocus && (
                 <div className="search-results-container">
                   {searchResults?.map((user) => (
                     <SearchResultCard user={user} key={user._id} />
@@ -167,11 +177,15 @@ const Main = () => {
             </div>
             <div className="chat-container flex-v">
               <div className="chat-window-header flex">
-                <img src="img/user-img-placeholder.png" alt="" />
-                <div>
-                  <p className="user">{otherUser}</p>
-                  <p className="status">offline</p>
-                </div>
+                {otherUser.id && (
+                  <>
+                    <img src="img/user-img-placeholder.png" alt="" />
+                    <div>
+                      <p className="user">{otherUser.username}</p>
+                      <p className="status">offline</p>
+                    </div>
+                  </>
+                )}
               </div>
               <div className="chat-content flex-1 flex-v">
                 {messages?.map((m) => (
@@ -206,13 +220,17 @@ const Main = () => {
 
             <div className="right-sidebar-container flex-v">
               <div className="right-sidebar-content">
-                <img src="img/user-img-placeholder-2.png" alt="" />
-                <p className="user">
-                  <strong>{otherUser}</strong>
-                </p>
-                <p className="user-joined">
-                  <strong>Joined on 04/06/2022</strong>
-                </p>
+                {otherUser.id && (
+                  <>
+                    <img src="img/user-img-placeholder-2.png" alt="" />
+                    <p className="user">
+                      <strong>{otherUser.id}</strong>
+                    </p>
+                    <p className="user-joined">
+                      <strong>Joined on 04/06/2022</strong>
+                    </p>
+                  </>
+                )}
               </div>
             </div>
           </div>
