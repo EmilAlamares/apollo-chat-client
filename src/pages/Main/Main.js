@@ -66,10 +66,11 @@ const Main = () => {
 
             setOtherUser({
               username,
-              id
+              id,
             })
           }
         })
+        
   }, [selectedConversation, user])
 
   // Get messages
@@ -87,7 +88,8 @@ const Main = () => {
   useEffect(() => {
     if (searchUser !== "") {
       api.get(`http://localhost:8000/users/${searchUser}`).then((res) => {
-        setSearchResults(res.data.user)
+        const {user} = res.data
+        setSearchResults(user)
       })
     } else {
       setSearchResults(null)
@@ -153,8 +155,13 @@ const Main = () => {
               </div>
               {searchUser && searchResults?.length > 0 && searchBarFocus && (
                 <div className="search-results-container">
-                  {searchResults?.map((user) => (
-                    <SearchResultCard user={user} key={user._id} />
+                  {searchResults?.map((result) => (
+                    <SearchResultCard
+                      result={result}
+                      key={result._id}
+                      setOtherUser={setOtherUser}
+                      setSelectedConversation={setSelectedConversation}
+                    />
                   ))}
                 </div>
               )}
@@ -188,13 +195,19 @@ const Main = () => {
                 )}
               </div>
               <div className="chat-content flex-1 flex-v">
-                {messages?.map((m) => (
-                  <Message
-                    msg={m.message}
-                    own={m.senderId === user.id ? true : false}
-                    key={m._id}
-                  />
-                ))}
+                {messages?.length > 0 ? (
+                  messages?.map((m) => (
+                    <Message
+                      msg={m.message}
+                      own={m.senderId === user.id ? true : false}
+                      key={m._id}
+                    />
+                  ))
+                ) : (
+                  <h1>
+                    Start a conversation with this user.
+                  </h1>
+                )}
               </div>
               <div className="chat-box flex">
                 <form className="flex">
