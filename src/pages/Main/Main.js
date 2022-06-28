@@ -70,7 +70,6 @@ const Main = () => {
             })
           }
         })
-        
   }, [selectedConversation, user])
 
   // Get messages
@@ -88,7 +87,7 @@ const Main = () => {
   useEffect(() => {
     if (searchUser !== "") {
       api.get(`http://localhost:8000/users/${searchUser}`).then((res) => {
-        const {user} = res.data
+        const { user } = res.data
         setSearchResults(user)
       })
     } else {
@@ -100,6 +99,23 @@ const Main = () => {
   const autoResize = (e) => {
     e.target.style.height = "36px"
     e.target.style.height = `${e.target.scrollHeight + 16}px`
+  }
+
+  // Handling creating conversation.
+  const createConversation = () => {
+    api
+    .post(`http://localhost:8000/conversations`, {
+      userOneName: user.username,
+      userOneId: user.id,
+      userTwoName: otherUser.username,
+      userTwoId: otherUser.id
+    })
+    .then((res) => {
+      if (res.data._id)
+      setConversations([res.data, ...conversations])
+      setSelectedConversation(res.data._id)
+    })
+    .catch((err) => console.log(err))
   }
 
   // Handling sending message.
@@ -195,7 +211,7 @@ const Main = () => {
                 )}
               </div>
               <div className="chat-content flex-1 flex-v">
-                {messages?.length > 0 ? (
+                {selectedConversation ? (
                   messages?.map((m) => (
                     <Message
                       msg={m.message}
@@ -204,14 +220,17 @@ const Main = () => {
                     />
                   ))
                 ) : (
-                  <h1>
+                  <h1 onClick={() => createConversation()}>
                     Start a conversation with this user.
                   </h1>
                 )}
               </div>
               <div className="chat-box flex">
                 <form className="flex">
-                  <div className="chat-box-input-container flex-1 flex">
+                  <div
+                    className="chat-box-input-container flex-1 flex"
+                    style={selectedConversation ? {} : { background: "#d8dcdf" }}
+                  >
                     <textarea
                       className="chat-box-input"
                       ref={chatBox}
@@ -221,6 +240,12 @@ const Main = () => {
                         autoResize(e)
                       }}
                       onKeyPress={(e) => handleKeyPress(e)}
+                      disabled={selectedConversation ? false : true}
+                      style={
+                        selectedConversation
+                          ? {}
+                          : { background: "#d8dcdf", border: "8px solid #d8dcdf" }
+                      }
                       autoFocus
                     />
                   </div>
@@ -237,7 +262,7 @@ const Main = () => {
                   <>
                     <img src="img/user-img-placeholder-2.png" alt="" />
                     <p className="user">
-                      <strong>{otherUser.id}</strong>
+                      <strong>{otherUser.username}</strong>
                     </p>
                     <p className="user-joined">
                       <strong>Joined on 04/06/2022</strong>
