@@ -34,8 +34,13 @@ const Main = () => {
 
   // Connect socket
   useEffect(() => {
-    socket.current = io("http://localhost:8000")
-  }, [])
+    socket.current = io("http://localhost:8000", {query: `user=${user.id}`})
+
+    // Update the conversation when received new message.
+    socket.current.on('new-message', (c) => {console.log(c)})
+    socket.current.on('receiveMsg', (msg) => setMessages([...msg, msg]))
+
+  }, [user])
 
   // Get conversations
   useEffect(() => {
