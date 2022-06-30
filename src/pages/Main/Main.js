@@ -104,29 +104,47 @@ const Main = () => {
   // Handling creating conversation.
   const createConversation = () => {
     api
-    .post(`http://localhost:8000/conversations`, {
-      userOneName: user.username,
-      userOneId: user.id,
-      userTwoName: otherUser.username,
-      userTwoId: otherUser.id
-    })
-    .then((res) => {
-      if (res.data._id)
-      setConversations([res.data, ...conversations])
-      setSelectedConversation(res.data._id)
-    })
-    .catch((err) => console.log(err))
+      .post(`http://localhost:8000/conversations`, {
+        userOneName: user.username,
+        userOneId: user.id,
+        userTwoName: otherUser.username,
+        userTwoId: otherUser.id,
+      })
+      .then((res) => {
+        if (res.data._id) setConversations([res.data, ...conversations])
+        setSelectedConversation(res.data._id)
+      })
+      .catch((err) => console.log(err))
   }
 
   // Handling sending message.
   const handleSend = (e) => {
     e.preventDefault()
-    let newMessage = ""
 
     if (chatBox.current.value !== "") {
-      newMessage = { message: chatBox.current.value, senderId: user.id }
-      socket.current.emit("new-message", `${newMessage.message}`)
-      setMessages([...messages, newMessage])
+      api
+        .post(`http://localhost:8000/messages`, {
+          message: chatBox.current.value,
+          senderId: user.id,
+          recipientId: otherUser.id,
+        })
+        .then((res) => {
+          let {message} = res.data
+          setMessages([...messages, message])
+
+          // For updating the last entry in conversation object.
+          const newState = conversations?.map(c => {
+            if (c._id === selectedConversation)
+            return {...c, lastEntry: {senderId: user.id, message: message.message}}
+            else
+            return c
+          })
+          setConversations(newState)
+        })
+        .catch((err) => console.log(err))
+
+      // socket.current.emit("new-message", `${newMessage.message}`)
+      // setMessages([...messages, newMessage])
     }
 
     chatBox.current.value = ""
@@ -229,7 +247,9 @@ const Main = () => {
                 <form className="flex">
                   <div
                     className="chat-box-input-container flex-1 flex"
-                    style={selectedConversation ? {} : { background: "#d8dcdf" }}
+                    style={
+                      selectedConversation ? {} : { background: "#d8dcdf" }
+                    }
                   >
                     <textarea
                       className="chat-box-input"
@@ -244,7 +264,10 @@ const Main = () => {
                       style={
                         selectedConversation
                           ? {}
-                          : { background: "#d8dcdf", border: "8px solid #d8dcdf" }
+                          : {
+                              background: "#d8dcdf",
+                              border: "8px solid #d8dcdf",
+                            }
                       }
                       autoFocus
                     />
