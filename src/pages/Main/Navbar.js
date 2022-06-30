@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import { Socket } from "socket.io-client"
 import { UserContext } from "../../contexts/UserContext"
 
 const Navbar = () => {

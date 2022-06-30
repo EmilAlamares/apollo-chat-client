@@ -38,7 +38,7 @@ const Main = () => {
 
     // Update the conversation when received new message.
     socket.current.on('new-message', (c) => {console.log(c)})
-    socket.current.on('receiveMsg', (msg) => setMessages([...msg, msg]))
+    socket.current.on('receiveMsg', (msg) => console.log(msg))
 
   }, [user])
 
@@ -145,10 +145,9 @@ const Main = () => {
             return c
           })
           setConversations(newState)
+          socket.current.emit("new-message", message)
         })
         .catch((err) => console.log(err))
-
-      // socket.current.emit("new-message", `${newMessage.message}`)
       // setMessages([...messages, newMessage])
     }
 
