@@ -170,7 +170,7 @@ const Main = () => {
     <>
       {conversations && otherUser && (
         <div className="main-content">
-          <Navbar />
+          <Navbar socket={socket.current}/>
           <div className="flex" style={{ height: "calc(100% - 50px)" }}>
             <div className="left-sidebar-container flex-v">
               <div className="searchBar-container">

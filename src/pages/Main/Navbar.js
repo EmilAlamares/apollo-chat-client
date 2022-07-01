@@ -1,9 +1,8 @@
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import { Socket } from "socket.io-client"
 import { UserContext } from "../../contexts/UserContext"
 
-const Navbar = () => {
+const Navbar = ({socket}) => {
   const navigate = useNavigate()
   const { user } = useContext(UserContext)
   return (
@@ -14,6 +13,7 @@ const Navbar = () => {
         style={{ cursor: "pointer" }}
         onClick={() => {
           localStorage.clear()
+          socket.disconnect()
           navigate('/')
         }}
       >
