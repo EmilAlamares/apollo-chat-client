@@ -2,7 +2,7 @@ import Navbar from "./Navbar"
 import Message from "../../components/Message"
 import api from "../../api/util"
 import { useNavigate } from "react-router-dom"
-import { useState, useEffect, useContext, useRef } from "react"
+import { useState, useEffect, useContext, useRef, useLayoutEffect } from "react"
 import { UserContext } from "../../contexts/UserContext"
 import Conversation from "../../components/Conversation"
 import { io } from "socket.io-client"
@@ -18,6 +18,7 @@ const Main = () => {
   const [searchBarFocus, setSearchBarFocus] = useState(false)
   const { user } = useContext(UserContext)
   const chatBox = useRef(null)
+  const scrollRef = useRef(null)
   const navigate = useNavigate()
   let socket = useRef(null)
 
@@ -86,6 +87,7 @@ const Main = () => {
           setMessages(res.data.message)
         }
       })
+    
   }, [selectedConversation])
 
   // Handle user search.
@@ -99,6 +101,12 @@ const Main = () => {
       setSearchResults(null)
     }
   }, [searchUser])
+
+  // Auto scroll after every message. 
+  useLayoutEffect(() =>{
+    if (scrollRef.current)
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+  }, [messages])
 
   // Auto resizing of the chat-box textarea
   const autoResize = (e) => {
@@ -232,7 +240,8 @@ const Main = () => {
                   </>
                 )}
               </div>
-              <div className="chat-content flex-1 flex-v">
+              <div className="chat-content flex-1 flex-v" ref={scrollRef}>
+                <div className="flex-v full-height flex-0">
                 {selectedConversation ? (
                   messages?.map((m) => (
                     <Message
@@ -246,6 +255,7 @@ const Main = () => {
                     Start a conversation with this user.
                   </h1>
                 )}
+              </div>
               </div>
               <div className="chat-box flex">
                 <form className="flex">

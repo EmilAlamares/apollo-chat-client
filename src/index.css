@@ -304,6 +304,7 @@ textarea {
   padding: 10px 10px;
   justify-content: flex-end;
   position: relative;
+  overflow-y: auto;
 }
 
 .msg-container {
@@ -494,6 +495,10 @@ textarea {
   display: flex;
 }
 
+.flex-0{
+  flex: 0;
+}
+
 .flex-1 {
   flex: 1;
 }
@@ -506,6 +511,10 @@ textarea {
 .align-center {
   align-items: center;
   height: 100vh;
+}
+
+.full-height{
+  height: 100%;
 }
 
 /* .skeleton{} */
