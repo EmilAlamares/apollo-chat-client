@@ -49,7 +49,7 @@ const Main = () => {
       if (res.data) {
         const { conversation } = res.data
         setConversations(conversation)
-        setSelectedConversation(conversation[0] ? conversation[0]._id : null)
+        setSelectedConversation(conversation[0] ? conversation[0]?._id : null)
       }
 
       if (!res.data.conversation[0]) setOtherUser(true) // To allow the rendering when there's no available conversation.

@@ -301,10 +301,18 @@ textarea {
 
 .chat-content {
   box-shadow: inset 0px 0px 7px #424b5475;
-  padding: 10px 10px;
+  padding: 0px 10px;
   justify-content: flex-end;
   position: relative;
   overflow-y: auto;
+}
+
+.chat-content div div:last-child p{
+  margin-bottom: 10px;
+}
+
+.chat-content div div:first-child p{
+  margin-top: 10px;
 }
 
 .msg-container {

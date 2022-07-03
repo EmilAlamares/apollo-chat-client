@@ -42,7 +42,12 @@ const Login = () => {
 
   return (
     <div className="align-center flex">
-      <div className="login-container">
+      <div className="login-container" onKeyPress={(e) => {
+        if (e.key === 'Enter')
+        {
+          handleLogin(e)
+        }
+        }}>
         <h1>Apollo Chat!</h1>
         <h2>Login</h2>
         <form>
