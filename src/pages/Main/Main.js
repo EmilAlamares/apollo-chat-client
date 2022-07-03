@@ -11,7 +11,7 @@ import SearchResultCard from "../../components/SearchResultCard"
 const Main = () => {
   const [conversations, setConversations] = useState(null)
   const [selectedConversation, setSelectedConversation] = useState(null)
-  const [messages, setMessages] = useState(null)
+  const [messages, setMessages] = useState([])
   const [otherUser, setOtherUser] = useState(null)
   const [searchUser, setSearchUser] = useState("")
   const [searchResults, setSearchResults] = useState(null)
@@ -35,13 +35,27 @@ const Main = () => {
 
   // Connect socket
   useEffect(() => {
-    socket.current = io("http://localhost:8000", {query: `user=${user.id}`})
+    socket.current = io("http://localhost:8000", { query: `user=${user.id}` })
 
-    // Update the conversation when received new message.
-    socket.current.on('new-message', (c) => {console.log(c)})
-    socket.current.on('receiveMsg', (msg) => console.log(msg))
+    // socket.current.on("receiveMsg", (msg) => {
+    //   console.log('nice')
+    // })
 
-  }, [user])
+    // socket.current.on("receiveMsg", (msg) => {
+    //   if (messages.length !== 0) setMessages([...messages, msg])
+    // })
+
+  }, [])
+
+  useEffect(() => {
+    // socket.current.on("receiveMsg", (msg) => {
+    //   if (messages?.length !== 0) setMessages([...messages, msg])
+    // })
+
+    socket.current.on("receiveMsg", (msg) => {
+      if (typeof messages !== 'undefined') setMessages([...messages, msg])
+    })
+  })
 
   // Get conversations
   useEffect(() => {
@@ -87,7 +101,6 @@ const Main = () => {
           setMessages(res.data.message)
         }
       })
-    
   }, [selectedConversation])
 
   // Handle user search.
@@ -102,10 +115,10 @@ const Main = () => {
     }
   }, [searchUser])
 
-  // Auto scroll after every message. 
-  useLayoutEffect(() =>{
+  // Auto scroll after every message.
+  useLayoutEffect(() => {
     if (scrollRef.current)
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
   }, [messages])
 
   // Auto resizing of the chat-box textarea
@@ -142,21 +155,22 @@ const Main = () => {
           recipientId: otherUser.id,
         })
         .then((res) => {
-          let {message} = res.data
+          let { message } = res.data
           setMessages([...messages, message])
 
           // For updating the last entry in conversation object.
-          const newState = conversations?.map(c => {
+          const newState = conversations?.map((c) => {
             if (c._id === selectedConversation)
-            return {...c, lastEntry: {senderId: user.id, message: message.message}}
-            else
-            return c
+              return {
+                ...c,
+                lastEntry: { senderId: user.id, message: message.message },
+              }
+            else return c
           })
           setConversations(newState)
           socket.current.emit("new-message", message)
         })
         .catch((err) => console.log(err))
-      // setMessages([...messages, newMessage])
     }
 
     chatBox.current.value = ""
@@ -178,7 +192,7 @@ const Main = () => {
     <>
       {conversations && otherUser && (
         <div className="main-content">
-          <Navbar socket={socket.current}/>
+          <Navbar socket={socket.current} />
           <div className="flex" style={{ height: "calc(100% - 50px)" }}>
             <div className="left-sidebar-container flex-v">
               <div className="searchBar-container">
@@ -242,20 +256,20 @@ const Main = () => {
               </div>
               <div className="chat-content flex-1 flex-v" ref={scrollRef}>
                 <div className="flex-v full-height flex-0">
-                {selectedConversation ? (
-                  messages?.map((m) => (
-                    <Message
-                      msg={m.message}
-                      own={m.senderId === user.id ? true : false}
-                      key={m._id}
-                    />
-                  ))
-                ) : (
-                  <h1 onClick={() => createConversation()}>
-                    Start a conversation with this user.
-                  </h1>
-                )}
-              </div>
+                  {selectedConversation ? (
+                    messages?.map((m) => (
+                      <Message
+                        msg={m.message}
+                        own={m.senderId === user.id ? true : false}
+                        key={m._id}
+                      />
+                    ))
+                  ) : (
+                    <h1 onClick={() => createConversation()}>
+                      Start a conversation with this user.
+                    </h1>
+                  )}
+                </div>
               </div>
               <div className="chat-box flex">
                 <form className="flex">
