@@ -11,6 +11,7 @@ import SearchResultCard from "../../components/SearchResultCard"
 const Main = () => {
   const [conversations, setConversations] = useState(null)
   const [selectedConversation, setSelectedConversation] = useState(null)
+  const [receivedMessage, setReceivedMessage] = useState(null)
   const [messages, setMessages] = useState([])
   const [otherUser, setOtherUser] = useState(null)
   const [searchUser, setSearchUser] = useState("")
@@ -36,26 +37,15 @@ const Main = () => {
   // Connect socket
   useEffect(() => {
     socket.current = io("http://localhost:8000", { query: `user=${user.id}` })
+    
 
-    // socket.current.on("receiveMsg", (msg) => {
-    //   console.log('nice')
-    // })
-
-    // socket.current.on("receiveMsg", (msg) => {
-    //   if (messages.length !== 0) setMessages([...messages, msg])
-    // })
-
+    socket.current.on("receiveMsg", (msg) => setReceivedMessage(msg))
   }, [])
 
   useEffect(() => {
-    // socket.current.on("receiveMsg", (msg) => {
-    //   if (messages?.length !== 0) setMessages([...messages, msg])
-    // })
-
-    socket.current.on("receiveMsg", (msg) => {
-      if (typeof messages !== 'undefined') setMessages([...messages, msg])
-    })
-  })
+    if (receivedMessage?.senderId === otherUser?.id)
+    setMessages([...messages, receivedMessage])
+  }, [receivedMessage])
 
   // Get conversations
   useEffect(() => {
@@ -148,6 +138,7 @@ const Main = () => {
     e.preventDefault()
 
     if (chatBox.current.value !== "") {
+      setMessages([...messages, {message: chatBox.current.value, senderId: user.id, _id: Math.random()}])
       api
         .post(`http://localhost:8000/messages`, {
           message: chatBox.current.value,
@@ -156,7 +147,6 @@ const Main = () => {
         })
         .then((res) => {
           let { message } = res.data
-          setMessages([...messages, message])
 
           // For updating the last entry in conversation object.
           const newState = conversations?.map((c) => {
