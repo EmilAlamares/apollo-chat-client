@@ -14,7 +14,7 @@ const SearchResultCard = ({ result, setSelectedConversation, setOtherUser }) => 
         setOtherUser({username: result.username, id: result._id})
       }}
     >
-      <img src="img/user-img-placeholder.png" alt="user" />
+      <img src={`http://localhost:8000/image/${result._id}`} alt="user" />
       <p>{result.username}</p>
     </div>
   )

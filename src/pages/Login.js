@@ -59,6 +59,7 @@ const Login = () => {
             value={username}
             required
             autoComplete="off"
+            autoFocus
           />
           <input
             type="password"

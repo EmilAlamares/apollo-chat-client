@@ -1,21 +1,23 @@
 import { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
+import axios from "axios"
 
 const CreateAccount = () => {
   const { setUser } = useContext(UserContext)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [passwordConfirm, setPasswordConfirm] = useState("")
+  const [image, setImage] = useState(null)
   const navigate = useNavigate()
 
   const handleCreate = (e) => {
     e.preventDefault()
 
     if (!username || !password || !passwordConfirm)
-      throw new Error("Please input all fields.")
+      return console.log("Please input all fields.")
 
-    if (password !== passwordConfirm) throw new Error("Passwords don't match")
+    if (password !== passwordConfirm) console.log("Passwords don't match")
 
     // Converting js object for x-www-form-urlencoded content type.
     const data = new URLSearchParams({
@@ -38,16 +40,40 @@ const CreateAccount = () => {
             setUser(data)
             navigate("/chats")
           } else {
-            throw new Error(data.message)
+            console.log(data.message)
           }
+          if (image)
+          handleImageUpload(data.id)
         }
       })
       .catch((err) => console.log(err))
   }
 
+  const handleImageUpload = async (userId) => {
+    const formData = new FormData()
+    formData.append("image", image)
+    formData.append("filename", userId)
+    try {
+     axios.post("http://localhost:8000/image", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <div className="align-center flex">
-      <div className="login-container create-container">
+      <div
+        className="login-container create-container"
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            handleCreate(e)
+          }
+        }}
+      >
         <h1>Apollo Chat!</h1>
         <h2>Create Account</h2>
         <form>
@@ -58,6 +84,7 @@ const CreateAccount = () => {
             onChange={(e) => setUsername(e.target.value)}
             required
             autoComplete=""
+            autoFocus
           />
           <input
             type="password"
@@ -74,6 +101,11 @@ const CreateAccount = () => {
             onChange={(e) => setPasswordConfirm(e.target.value)}
             required
             autoComplete=""
+          />
+          <input
+            type="file"
+            accept=".jpg, .jpeg, .png, .bmp, .gif"
+            onChange={(e) => setImage(e.target.files[0])}
           />
           <div className="flex">
             <button onClick={() => navigate("/")}>Back</button>

@@ -265,6 +265,7 @@ textarea {
 .search-results-card img {
   height: 40px;
   width: 40px;
+  border-radius: 50%;
 }
 
 .search-results-card p {

@@ -6,6 +6,9 @@ const Conversation = ({ conv, selectedId }) => {
   const otherUserName = conv.usersName.filter(
     (usersName) => usersName !== user.username
   )
+  const otherUserId = conv.users.filter(
+    (users) => users !== user.id
+  )
 
   return (
     <>
@@ -15,7 +18,7 @@ const Conversation = ({ conv, selectedId }) => {
       <input type="radio" id={conv._id} name="convos" style={{display: "none"}} checked={selectedId === conv._id} onClick={e => e.preventDefault()} readOnly/> 
       <label htmlFor={conv._id}>
         <div className={"conversation flex"}>
-          <img src={"user-test.jpg"} alt="user image" />
+          <img src={`http://localhost:8000/image/${otherUserId}`} alt="user" />
           <span>
             <h1>{otherUserName}</h1>
             <p>{conv.lastEntry?.senderId === user.id ? 'You: ' : ''}{conv.lastEntry?.message}</p>

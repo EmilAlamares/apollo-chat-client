@@ -47,7 +47,7 @@ const Main = () => {
   useEffect(() => {
     if (receivedMessage?.senderId === otherUser?.id)
     setMessages(m => [...m, receivedMessage])
-    console.log(receivedMessage)
+
 
     // For updating the last entry in conversation state.
     const newState = conversations?.map((c) => {
@@ -254,7 +254,7 @@ const Main = () => {
               <div className="chat-window-header flex">
                 {otherUser.id && (
                   <>
-                    <img src="user-test.jpg" alt="user profile image" />
+                    <img src={`http://localhost:8000/image/${otherUser.id}`} alt="user profile" />
                     <div>
                       <p className="user">{otherUser.username}</p>
                       <p className="status">offline</p>
@@ -319,7 +319,7 @@ const Main = () => {
               <div className="right-sidebar-content">
                 {otherUser.id && (
                   <>
-                    <img src="user-test.jpg" alt="user image" />
+                    <img src={`http://localhost:8000/image/${otherUser.id}`} alt="" />
                     <p className="user">
                       <strong>{otherUser.username}</strong>
                     </p>
