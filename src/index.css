@@ -184,8 +184,9 @@ textarea {
   color: #92989f;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 240px;
+  max-width: 200px;
   overflow: hidden;
+  width: 200px;
 }
 
 .chat-window-header

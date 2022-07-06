@@ -38,14 +38,31 @@ const Main = () => {
   useEffect(() => {
     socket.current = io("http://localhost:8000", { query: `user=${user.id}` })
     
-
     socket.current.on("receiveMsg", (msg) => setReceivedMessage(msg))
-  }, [])
+  }, [user])
+
+
+  /* eslint-disable */
 
   useEffect(() => {
     if (receivedMessage?.senderId === otherUser?.id)
-    setMessages([...messages, receivedMessage])
+    setMessages(m => [...m, receivedMessage])
+    console.log(receivedMessage)
+
+    // For updating the last entry in conversation state.
+    const newState = conversations?.map((c) => {
+      if (c._id === receivedMessage.conversationId)
+        return {
+          ...c,
+          lastEntry: { senderId: receivedMessage.senderId, message: receivedMessage.message },
+        }
+      else return c
+    })
+  setConversations(newState)
+
   }, [receivedMessage])
+
+  /* eslint-enable */
 
   // Get conversations
   useEffect(() => {
@@ -139,6 +156,17 @@ const Main = () => {
 
     if (chatBox.current.value !== "") {
       setMessages([...messages, {message: chatBox.current.value, senderId: user.id, _id: Math.random()}])
+      // For updating the last entry in conversation state.
+      const newState = conversations?.map((c) => {
+        if (c._id === selectedConversation)
+          return {
+            ...c,
+            lastEntry: { senderId: user.id, message: chatBox.current.value },
+          }
+        else return c
+      })
+    setConversations(newState)
+
       api
         .post(`http://localhost:8000/messages`, {
           message: chatBox.current.value,
@@ -147,17 +175,7 @@ const Main = () => {
         })
         .then((res) => {
           let { message } = res.data
-
-          // For updating the last entry in conversation object.
-          const newState = conversations?.map((c) => {
-            if (c._id === selectedConversation)
-              return {
-                ...c,
-                lastEntry: { senderId: user.id, message: message.message },
-              }
-            else return c
-          })
-          setConversations(newState)
+        
           socket.current.emit("new-message", message)
         })
         .catch((err) => console.log(err))
