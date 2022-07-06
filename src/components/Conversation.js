@@ -15,7 +15,7 @@ const Conversation = ({ conv, selectedId }) => {
       <input type="radio" id={conv._id} name="convos" style={{display: "none"}} checked={selectedId === conv._id} onClick={e => e.preventDefault()} readOnly/> 
       <label htmlFor={conv._id}>
         <div className={"conversation flex"}>
-          <img src={"img/user-img-placeholder-2.png"} alt="User" />
+          <img src={"user-test.jpg"} alt="user image" />
           <span>
             <h1>{otherUserName}</h1>
             <p>{conv.lastEntry?.senderId === user.id ? 'You: ' : ''}{conv.lastEntry?.message}</p>

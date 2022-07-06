@@ -254,7 +254,7 @@ const Main = () => {
               <div className="chat-window-header flex">
                 {otherUser.id && (
                   <>
-                    <img src="img/user-img-placeholder.png" alt="" />
+                    <img src="user-test.jpg" alt="user profile image" />
                     <div>
                       <p className="user">{otherUser.username}</p>
                       <p className="status">offline</p>
@@ -319,7 +319,7 @@ const Main = () => {
               <div className="right-sidebar-content">
                 {otherUser.id && (
                   <>
-                    <img src="img/user-img-placeholder-2.png" alt="" />
+                    <img src="user-test.jpg" alt="user image" />
                     <p className="user">
                       <strong>{otherUser.username}</strong>
                     </p>
