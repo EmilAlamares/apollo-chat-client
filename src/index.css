@@ -336,6 +336,7 @@ textarea {
   background: #f4f5f6;
   border-radius: 20px;
   color: #424b54;
+  word-break: break-word;
 }
 
 .own {

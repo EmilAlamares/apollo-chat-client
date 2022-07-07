@@ -37,29 +37,33 @@ const Main = () => {
   // Connect socket
   useEffect(() => {
     socket.current = io("http://localhost:8000", { query: `user=${user.id}` })
-    
+
     socket.current.on("receiveMsg", (msg) => setReceivedMessage(msg))
   }, [user])
 
-
   /* eslint-disable */
+  // Handling receiving message.
 
   useEffect(() => {
     if (receivedMessage?.senderId === otherUser?.id)
-    setMessages(m => [...m, receivedMessage])
+      setMessages((m) => [...m, receivedMessage])
 
-
+    let index
     // For updating the last entry in conversation state.
-    const newState = conversations?.map((c) => {
-      if (c._id === receivedMessage.conversationId)
+    const newState = conversations?.map((c, idx) => {
+      if (c._id === receivedMessage.conversationId) {
+        index = idx
         return {
           ...c,
-          lastEntry: { senderId: receivedMessage.senderId, message: receivedMessage.message },
+          lastEntry: {
+            senderId: receivedMessage.senderId,
+            message: receivedMessage.message,
+          },
         }
-      else return c
+      } else return c
     })
-  setConversations(newState)
-
+    newState?.splice(0, 0, newState.splice(index, 1)[0]) // To move the selected conversation to the first index.
+    setConversations(newState)
   }, [receivedMessage])
 
   /* eslint-enable */
@@ -155,17 +159,28 @@ const Main = () => {
     e.preventDefault()
 
     if (chatBox.current.value !== "") {
-      setMessages([...messages, {message: chatBox.current.value, senderId: user.id, _id: Math.random()}])
+      let index
+      setMessages([
+        ...messages,
+        {
+          message: chatBox.current.value,
+          senderId: user.id,
+          _id: Math.random(),
+        },
+      ])
+
       // For updating the last entry in conversation state.
-      const newState = conversations?.map((c) => {
-        if (c._id === selectedConversation)
+      const newState = conversations?.map((c, idx) => {
+        if (c._id === selectedConversation) {
+          index = idx
           return {
             ...c,
             lastEntry: { senderId: user.id, message: chatBox.current.value },
           }
-        else return c
+        } else return c
       })
-    setConversations(newState)
+      newState.splice(0, 0, newState.splice(index, 1)[0]) // To move the selected conversation to the first index.
+      setConversations(newState)
 
       api
         .post(`http://localhost:8000/messages`, {
@@ -175,7 +190,7 @@ const Main = () => {
         })
         .then((res) => {
           let { message } = res.data
-        
+
           socket.current.emit("new-message", message)
         })
         .catch((err) => console.log(err))
@@ -254,7 +269,10 @@ const Main = () => {
               <div className="chat-window-header flex">
                 {otherUser.id && (
                   <>
-                    <img src={`http://localhost:8000/image/${otherUser.id}`} alt="user profile" />
+                    <img
+                      src={`http://localhost:8000/image/${otherUser.id}`}
+                      alt="user profile"
+                    />
                     <div>
                       <p className="user">{otherUser.username}</p>
                       <p className="status">offline</p>
@@ -319,7 +337,10 @@ const Main = () => {
               <div className="right-sidebar-content">
                 {otherUser.id && (
                   <>
-                    <img src={`http://localhost:8000/image/${otherUser.id}`} alt="" />
+                    <img
+                      src={`http://localhost:8000/image/${otherUser.id}`}
+                      alt=""
+                    />
                     <p className="user">
                       <strong>{otherUser.username}</strong>
                     </p>
