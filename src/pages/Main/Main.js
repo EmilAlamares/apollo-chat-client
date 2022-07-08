@@ -17,6 +17,7 @@ const Main = () => {
   const [searchUser, setSearchUser] = useState("")
   const [searchResults, setSearchResults] = useState(null)
   const [searchBarFocus, setSearchBarFocus] = useState(false)
+  const [onlineUsers, setOnlineUsers] = useState([])
   const { user } = useContext(UserContext)
   const chatBox = useRef(null)
   const scrollRef = useRef(null)
@@ -38,8 +39,15 @@ const Main = () => {
   useEffect(() => {
     socket.current = io("http://localhost:8000", { query: `user=${user.id}` })
 
+    socket.current.on("userOnline", user => setOnlineUsers((users) => [...users, user]))
+    socket.current.on("userOffline", user => setOnlineUsers(user))
+
+    socket.current.on("currentOnline", (users) => setOnlineUsers(users))
+
     socket.current.on("receiveMsg", (msg) => setReceivedMessage(msg))
-    socket.current.on("receiveConv", conv => setConversations(c => [conv, ...c]))
+    socket.current.on("receiveConv", (conv) =>
+      setConversations((c) => [conv, ...c])
+    )
   }, [user])
 
   /* eslint-disable */
@@ -151,7 +159,7 @@ const Main = () => {
       .then((res) => {
         if (res.data._id) setConversations([res.data, ...conversations])
         setSelectedConversation(res.data._id)
-        socket.current.emit('new-conversation', res.data)
+        socket.current.emit("new-conversation", res.data)
       })
       .catch((err) => console.log(err))
   }
@@ -276,7 +284,17 @@ const Main = () => {
                     />
                     <div>
                       <p className="user">{otherUser.username}</p>
-                      <p className="status">offline</p>
+                      <p
+                        className={
+                          onlineUsers.includes(otherUser.id)
+                            ? "online-status"
+                            : "offline-status"
+                        }
+                      >
+                        {onlineUsers.includes(otherUser.id)
+                          ? "online"
+                          : "offline"}
+                      </p>
                     </div>
                   </>
                 )}

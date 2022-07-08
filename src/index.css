@@ -313,10 +313,16 @@ textarea {
   color: #424b54;
 }
 
-.chat-window-header .status {
+.chat-window-header .offline-status {
   font-size: 12px;
   font-weight: bold;
   color: #b5bbbf;
+}
+
+.chat-window-header .online-status{
+  font-size: 12px;
+  font-weight: bold;
+  color: #0CCA4A;
 }
 
 .chat-content {
