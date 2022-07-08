@@ -39,6 +39,7 @@ const Main = () => {
     socket.current = io("http://localhost:8000", { query: `user=${user.id}` })
 
     socket.current.on("receiveMsg", (msg) => setReceivedMessage(msg))
+    socket.current.on("receiveConv", conv => setConversations(c => [conv, ...c]))
   }, [user])
 
   /* eslint-disable */
@@ -150,6 +151,7 @@ const Main = () => {
       .then((res) => {
         if (res.data._id) setConversations([res.data, ...conversations])
         setSelectedConversation(res.data._id)
+        socket.current.emit('new-conversation', res.data)
       })
       .catch((err) => console.log(err))
   }
@@ -190,7 +192,6 @@ const Main = () => {
         })
         .then((res) => {
           let { message } = res.data
-
           socket.current.emit("new-message", message)
         })
         .catch((err) => console.log(err))

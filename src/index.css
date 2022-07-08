@@ -153,6 +153,17 @@ textarea {
   cursor: pointer;
 }
 
+.unseen-conversation p {
+  font-weight: bold;
+  color: #47aaeb !important;
+}
+
+.unseen-conversation::after {
+  content: "";
+  border: 4.9px solid #47aaeb;
+  border-radius: 50%;
+}
+
 .left-sidebar-content input[type="radio"]:checked + label div {
   background: #cadeeb;
   transition: 0.2s;
