@@ -38,6 +38,7 @@ const CreateAccount = () => {
           data = await data.json()
           if (data.message === "Success") {
             setUser(data)
+            localStorage.setItem('user', JSON.stringify(data))
             navigate("/chats")
           } else {
             console.log(data.message)
@@ -104,7 +105,7 @@ const CreateAccount = () => {
           />
           <input
             type="file"
-            accept=".jpg, .jpeg, .png, .bmp, .gif"
+            accept=".jpg, .jpeg, .png, .bmp, .gif, .jfif"
             onChange={(e) => setImage(e.target.files[0])}
           />
           <div className="flex">

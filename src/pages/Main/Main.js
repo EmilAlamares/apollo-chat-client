@@ -28,6 +28,7 @@ const Main = () => {
   api
     .get(`http://localhost:8000/home`)
     .then((res) => {
+      console.log(res.data.message)
       if (res.data.message !== "Success") {
         navigate("/")
         localStorage.clear()
@@ -39,8 +40,10 @@ const Main = () => {
   useEffect(() => {
     socket.current = io("http://localhost:8000", { query: `user=${user.id}` })
 
-    socket.current.on("userOnline", user => setOnlineUsers((users) => [...users, user]))
-    socket.current.on("userOffline", user => setOnlineUsers(user))
+    socket.current.on("userOnline", (user) =>
+      setOnlineUsers((users) => [...users, user])
+    )
+    socket.current.on("userOffline", (user) => setOnlineUsers(user))
 
     socket.current.on("currentOnline", (users) => setOnlineUsers(users))
 
@@ -83,7 +86,11 @@ const Main = () => {
       if (res.data) {
         const { conversation } = res.data
         setConversations(conversation)
+        const filteredConversation = conversation?.filter((conv) => conv.lastEntry.senderId === user.id)
+        const sortedConversation = filteredConversation.sort((convA, convB) => convB.lastModifiedEntry - convA.lastModifiedEntry)
         setSelectedConversation(conversation[0] ? conversation[0]?._id : null)
+        setSelectedConversation(filteredConversation[0] ? sortedConversation[0]?._id : conversation[0]?._id)
+
       }
 
       if (!res.data.conversation[0]) setOtherUser(true) // To allow the rendering when there's no available conversation.
