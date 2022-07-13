@@ -28,7 +28,6 @@ const Main = () => {
   api
     .get(`http://localhost:8000/home`)
     .then((res) => {
-      console.log(res.data.message)
       if (res.data.message !== "Success") {
         navigate("/")
         localStorage.clear()
@@ -86,11 +85,18 @@ const Main = () => {
       if (res.data) {
         const { conversation } = res.data
         setConversations(conversation)
-        const filteredConversation = conversation?.filter((conv) => conv.lastEntry.senderId === user.id)
-        const sortedConversation = filteredConversation.sort((convA, convB) => convB.lastModifiedEntry - convA.lastModifiedEntry)
+        const filteredConversation = conversation?.filter(
+          (conv) => conv.lastEntry.senderId === user.id
+        )
+        const sortedConversation = filteredConversation.sort(
+          (convA, convB) => convB.lastModifiedEntry - convA.lastModifiedEntry
+        )
         setSelectedConversation(conversation[0] ? conversation[0]?._id : null)
-        setSelectedConversation(filteredConversation[0] ? sortedConversation[0]?._id : conversation[0]?._id)
-
+        setSelectedConversation(
+          filteredConversation[0]
+            ? sortedConversation[0]?._id
+            : conversation[0]?._id
+        )
       }
 
       if (!res.data.conversation[0]) setOtherUser(true) // To allow the rendering when there's no available conversation.
@@ -227,6 +233,43 @@ const Main = () => {
       }
   }
 
+  // To determine what to display in chat window.
+  const displayChatWindow = () => {
+  const convIsAlreadyCreated = conversations.map(c => c.users).filter(user => user.includes(otherUser.id))
+
+    if (!conversations[0] && !otherUser.id)
+      return (
+        <h1 className="no-conversation-header">
+          You currently have no conversations. Search a user and start a
+          conversation.
+        </h1>
+      )
+
+    if (otherUser.id && !messages && !convIsAlreadyCreated[0])
+      return (
+        <h1
+          onClick={(e) => {
+            // Secure this in the future.
+            if(e.target.className === 'start-conversation-header'){
+            e.target.className += ' start-conversation-header-loading'
+            createConversation()
+          }
+          }}
+          className="start-conversation-header"
+        >
+          Start a conversation with this user.
+        </h1>
+      )
+
+    return messages?.map((m) => (
+      <Message
+        msg={m.message}
+        own={m.senderId === user.id ? true : false}
+        key={m._id}
+      />
+    ))
+  }
+
   return (
     <>
       {conversations && otherUser && (
@@ -308,19 +351,7 @@ const Main = () => {
               </div>
               <div className="chat-content flex-1 flex-v" ref={scrollRef}>
                 <div className="flex-v full-height flex-0">
-                  {selectedConversation ? (
-                    messages?.map((m) => (
-                      <Message
-                        msg={m.message}
-                        own={m.senderId === user.id ? true : false}
-                        key={m._id}
-                      />
-                    ))
-                  ) : (
-                    <h1 onClick={() => createConversation()}>
-                      Start a conversation with this user.
-                    </h1>
-                  )}
+                  {displayChatWindow()}
                 </div>
               </div>
               <div className="chat-box flex">

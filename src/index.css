@@ -62,7 +62,7 @@ textarea {
   right: 30px;
 }
 
-.navbar h2:hover{
+.navbar h2:hover {
   text-decoration: underline;
 }
 
@@ -201,8 +201,7 @@ textarea {
   width: 200px;
 }
 
-.chat-window-header
-{
+.chat-window-header {
   height: 85px;
   border-bottom: #424b546b 1px solid;
   text-align: center;
@@ -257,7 +256,6 @@ textarea {
   /* display: none; */
 }
 
-
 .search-results-container div {
   padding: 15px 10px;
   cursor: pointer;
@@ -268,7 +266,7 @@ textarea {
   background: #424b540a;
 }
 
-.search-results-card{
+.search-results-card {
   width: 100%;
   align-items: center;
 }
@@ -301,7 +299,7 @@ textarea {
   line-height: 1.25;
 }
 
-.chat-window-header img{
+.chat-window-header img {
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -319,10 +317,10 @@ textarea {
   color: #b5bbbf;
 }
 
-.chat-window-header .online-status{
+.chat-window-header .online-status {
   font-size: 12px;
   font-weight: bold;
-  color: #0CCA4A;
+  color: #0cca4a;
 }
 
 .chat-content {
@@ -333,11 +331,11 @@ textarea {
   overflow-y: auto;
 }
 
-.chat-content div div:last-child p{
+.chat-content div div:last-child p {
   margin-bottom: 10px;
 }
 
-.chat-content div div:first-child p{
+.chat-content div div:first-child p {
   margin-top: 10px;
 }
 
@@ -365,18 +363,36 @@ textarea {
   color: #f4f5f6;
 }
 
-.chat-content h1{
+.start-conversation-header, .no-conversation-header {
   top: 50%;
   position: absolute;
   width: 100%;
   left: 0;
-  color:#47aaeb;
+  color: #47aaeb;
   font-size: 16px;
   cursor: pointer;
+  transition: 300ms;
 }
 
-.chat-content h1:hover{
+.chat-content .start-conversation-header:hover {
   text-decoration: underline;
+}
+
+.chat-content .start-conversation-header-loading{
+  color: #424b5475;
+  user-select: none;
+  pointer-events: none;
+}
+
+.chat-content .start-conversation-header-loading:hover{
+  text-decoration: none;
+}
+
+.chat-content .no-conversation-header {
+  color: #424b5475;
+  cursor: auto;
+  user-select: none;
+
 }
 
 .chat-box form {
@@ -536,7 +552,7 @@ textarea {
   display: flex;
 }
 
-.flex-0{
+.flex-0 {
   flex: 0;
 }
 
@@ -554,7 +570,7 @@ textarea {
   height: 100vh;
 }
 
-.full-height{
+.full-height {
   height: 100%;
 }
 
