@@ -14,14 +14,20 @@ const SearchResultCard = ({
         setSelectedConversation(null)
 
         result.conversation.map((res, idx) => {
-          if (res.usersName.includes(user.username)) // Checks if the user in the card has a conversation with the current user.
-          return setSelectedConversation(result.conversation[idx]._id)
+          if (res.usersName.includes(user.username))
+            // Checks if the user in the card has a conversation with the current user.
+            return setSelectedConversation(result.conversation[idx]._id)
+
+            return true // For warnings.
         })
 
         setOtherUser({ username: result.username, id: result._id })
       }}
     >
-      <img src={`http://localhost:8000/image/${result._id}`} alt="user" />
+      <img
+        src={`https://apollo-chat-server.herokuapp.com/image/${result._id}`}
+        alt="user"
+      />
       <p>{result.username}</p>
     </div>
   )

@@ -2,9 +2,9 @@ import { useRef } from "react"
 import { io } from "socket.io-client"
 
 const ChatBox = () => {
-  const socket = io("http://localhost:8000")
+  const socket = io("https://apollo-chat-server.herokuapp.com")
   const chatBox = useRef(null)
-  
+
   const autoResize = (e) => {
     e.target.style.height = "36px"
     e.target.style.height = `${e.target.scrollHeight + 16}px`
@@ -23,11 +23,11 @@ const ChatBox = () => {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter")
-    if (!e.shiftKey) // For handling shift + enter key press.
-    {
-      e.preventDefault()
-      handleSend(e)
-    }
+      if (!e.shiftKey) {
+        // For handling shift + enter key press.
+        e.preventDefault()
+        handleSend(e)
+      }
   }
 
   return (

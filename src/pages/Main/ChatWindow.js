@@ -5,7 +5,7 @@
 // const ChatWindow = () => {
 //   const [messages, setMessages] = useState(null)
 //   useEffect(() => {
-//     api.get(`http://localhost:8000/messages`).then((res) => {
+//     api.get(`https://apollo-chat-server.herokuapp.com/messages`).then((res) => {
 //       if (res.data) {
 //         setMessages(res.data.message)
 //       }

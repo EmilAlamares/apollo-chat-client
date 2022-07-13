@@ -19,35 +19,31 @@ const Login = () => {
     }).toString()
 
     axios
-      .post(
-        `http://localhost:8000/users/login`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      )
-      .then((response) => {
-        if (response.data.message === 'Success')
-        {
-          setUser(response.data)
-          localStorage.setItem('user', JSON.stringify(response.data))
-          navigate("/chats")
-        }
-        else console.log(`Error: ${response.data.message}`)
+      .post(`https://apollo-chat-server.herokuapp.com/users/login`, data, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       })
-      .catch(err => console.log(err))
+      .then((response) => {
+        if (response.data.message === "Success") {
+          setUser(response.data)
+          localStorage.setItem("user", JSON.stringify(response.data))
+          navigate("/chats")
+        } else console.log(`Error: ${response.data.message}`)
+      })
+      .catch((err) => console.log(err))
   }
 
   return (
     <div className="align-center flex">
-      <div className="login-container" onKeyPress={(e) => {
-        if (e.key === 'Enter')
-        {
-          handleLogin(e)
-        }
-        }}>
+      <div
+        className="login-container"
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            handleLogin(e)
+          }
+        }}
+      >
         <h1>Apollo Chat!</h1>
         <h2>Login</h2>
         <form>

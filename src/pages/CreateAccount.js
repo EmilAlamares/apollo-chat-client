@@ -26,7 +26,7 @@ const CreateAccount = () => {
       passwordConfirm,
     }).toString()
 
-    fetch(`http://localhost:8000/users`, {
+    fetch(`https://apollo-chat-server.herokuapp.com/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -38,13 +38,12 @@ const CreateAccount = () => {
           data = await data.json()
           if (data.message === "Success") {
             setUser(data)
-            localStorage.setItem('user', JSON.stringify(data))
+            localStorage.setItem("user", JSON.stringify(data))
             navigate("/chats")
           } else {
             console.log(data.message)
           }
-          if (image)
-          handleImageUpload(data.id)
+          if (image) handleImageUpload(data.id)
         }
       })
       .catch((err) => console.log(err))
@@ -55,7 +54,7 @@ const CreateAccount = () => {
     formData.append("image", image)
     formData.append("filename", userId)
     try {
-     axios.post("http://localhost:8000/image", formData, {
+      axios.post("https://apollo-chat-server.herokuapp.com/image", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

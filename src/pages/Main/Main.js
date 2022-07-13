@@ -26,7 +26,7 @@ const Main = () => {
 
   // Soft verification -- to be optimized in the future.
   api
-    .get(`http://localhost:8000/home`)
+    .get(`https://apollo-chat-server.herokuapp.com/home`)
     .then((res) => {
       if (res.data.message !== "Success") {
         navigate("/")
@@ -37,7 +37,9 @@ const Main = () => {
 
   // Connect socket
   useEffect(() => {
-    socket.current = io("http://localhost:8000", { query: `user=${user.id}` })
+    socket.current = io("https://apollo-chat-server.herokuapp.com", {
+      query: `user=${user.id}`,
+    })
 
     socket.current.on("userOnline", (user) =>
       setOnlineUsers((users) => [...users, user])
@@ -81,33 +83,37 @@ const Main = () => {
 
   // Get conversations
   useEffect(() => {
-    api.get(`http://localhost:8000/conversations`).then((res) => {
-      if (res.data) {
-        const { conversation } = res.data
-        setConversations(conversation)
-        const filteredConversation = conversation?.filter(
-          (conv) => conv.lastEntry.senderId === user.id
-        )
-        const sortedConversation = filteredConversation.sort(
-          (convA, convB) => convB.lastModifiedEntry - convA.lastModifiedEntry
-        )
-        setSelectedConversation(conversation[0] ? conversation[0]?._id : null)
-        setSelectedConversation(
-          filteredConversation[0]
-            ? sortedConversation[0]?._id
-            : conversation[0]?._id
-        )
-      }
+    api
+      .get(`https://apollo-chat-server.herokuapp.com/conversations`)
+      .then((res) => {
+        if (res.data) {
+          const { conversation } = res.data
+          setConversations(conversation)
+          const filteredConversation = conversation?.filter(
+            (conv) => conv.lastEntry.senderId === user.id
+          )
+          const sortedConversation = filteredConversation.sort(
+            (convA, convB) => convB.lastModifiedEntry - convA.lastModifiedEntry
+          )
+          setSelectedConversation(conversation[0] ? conversation[0]?._id : null)
+          setSelectedConversation(
+            filteredConversation[0]
+              ? sortedConversation[0]?._id
+              : conversation[0]?._id
+          )
+        }
 
-      if (!res.data.conversation[0]) setOtherUser(true) // To allow the rendering when there's no available conversation.
-    })
+        if (!res.data.conversation[0]) setOtherUser(true) // To allow the rendering when there's no available conversation.
+      })
   }, [user])
 
   // Get other user(s) info
   useEffect(() => {
     if (selectedConversation)
       api
-        .get(`http://localhost:8000/conversations/${selectedConversation}`)
+        .get(
+          `https://apollo-chat-server.herokuapp.com/conversations/${selectedConversation}`
+        )
         .then((res) => {
           if (res.data) {
             const username = res.data.conversation[0].usersName.filter(
@@ -128,7 +134,9 @@ const Main = () => {
   // Get messages
   useEffect(() => {
     api
-      .get(`http://localhost:8000/messages/${selectedConversation}`)
+      .get(
+        `https://apollo-chat-server.herokuapp.com/messages/${selectedConversation}`
+      )
       .then((res) => {
         if (res.data) {
           setMessages(res.data.message)
@@ -139,10 +147,12 @@ const Main = () => {
   // Handle user search.
   useEffect(() => {
     if (searchUser !== "") {
-      api.get(`http://localhost:8000/users/${searchUser}`).then((res) => {
-        const { user } = res.data
-        setSearchResults(user)
-      })
+      api
+        .get(`https://apollo-chat-server.herokuapp.com/users/${searchUser}`)
+        .then((res) => {
+          const { user } = res.data
+          setSearchResults(user)
+        })
     } else {
       setSearchResults(null)
     }
@@ -163,7 +173,7 @@ const Main = () => {
   // Handling creating conversation.
   const createConversation = () => {
     api
-      .post(`http://localhost:8000/conversations`, {
+      .post(`https://apollo-chat-server.herokuapp.com/conversations`, {
         userOneName: user.username,
         userOneId: user.id,
         userTwoName: otherUser.username,
@@ -206,7 +216,7 @@ const Main = () => {
       setConversations(newState)
 
       api
-        .post(`http://localhost:8000/messages`, {
+        .post(`https://apollo-chat-server.herokuapp.com/messages`, {
           message: chatBox.current.value,
           senderId: user.id,
           recipientId: otherUser.id,
@@ -235,7 +245,9 @@ const Main = () => {
 
   // To determine what to display in chat window.
   const displayChatWindow = () => {
-  const convIsAlreadyCreated = conversations.map(c => c.users).filter(user => user.includes(otherUser.id))
+    const convIsAlreadyCreated = conversations
+      .map((c) => c.users)
+      .filter((user) => user.includes(otherUser.id))
 
     if (!conversations[0] && !otherUser.id)
       return (
@@ -250,10 +262,10 @@ const Main = () => {
         <h1
           onClick={(e) => {
             // Secure this in the future.
-            if(e.target.className === 'start-conversation-header'){
-            e.target.className += ' start-conversation-header-loading'
-            createConversation()
-          }
+            if (e.target.className === "start-conversation-header") {
+              e.target.className += " start-conversation-header-loading"
+              createConversation()
+            }
           }}
           className="start-conversation-header"
         >
@@ -329,7 +341,7 @@ const Main = () => {
                 {otherUser.id && (
                   <>
                     <img
-                      src={`http://localhost:8000/image/${otherUser.id}`}
+                      src={`https://apollo-chat-server.herokuapp.com/image/${otherUser.id}`}
                       alt="user profile"
                     />
                     <div>
@@ -395,7 +407,7 @@ const Main = () => {
                 {otherUser.id && (
                   <>
                     <img
-                      src={`http://localhost:8000/image/${otherUser.id}`}
+                      src={`https://apollo-chat-server.herokuapp.com/image/${otherUser.id}`}
                       alt=""
                     />
                     <p className="user">
